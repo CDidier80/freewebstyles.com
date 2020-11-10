@@ -13,7 +13,7 @@
 
 
 ### Description
-#### *A cloud-based Python 3 IDE designed for fast paced coding practice such that user's retain their knowledge and memory of the language's core concepts.*
+#### *A *
 
 
  
@@ -37,9 +37,9 @@
 
 As a designer/programmer: 
 
-I want a style-packed user experience
-I want an attractive, functional and responsive editor and terminal in which to create/take styles.
-I want to search and post styles by logical categories so I can find what I need quickly
+I want a style-packed user experience    
+I want an attractive, functional and responsive editor and terminal in which to create/take styles.   
+I want to search and post styles by logical categories so I can find what I need quickly   return
 I want to create a secure account that I can use to create styles and get credit for them 
 I want to be able to view the styles I've liked while logged in
 I want an easy way to copy and paste the styles into my projects
