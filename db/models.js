@@ -1,8 +1,8 @@
 const { model } = require('mongoose')
 
-const UserSchema = require('./models/User')
-const TravelLogSchema = require('./models/TravelLog')
-const CommentSchema = require('./models/Comments')
+const UserSchema = require('./schemax/User')
+const TravelLogSchema = require('./schemax/TravelLog')
+const CommentSchema = require('./schemax/Comments')
 
 const User = model('users', UserSchema)
 const Comment = model('comments', CommentSchema)

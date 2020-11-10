@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { __GetPosts } from '../services/PostService'
-import Card from '../components/Card'
+import { __GetPosts } from '../../services/PostService'
+import Card from '../../components/Card'
 import '../styles/Discover.css'
 
 export default class Discover extends Component {

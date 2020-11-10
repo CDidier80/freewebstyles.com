@@ -1,6 +1,8 @@
 const Router = require('express').Router()
-const UserController = require('../controllers/UserController')
-const {getToken, createToken, verifyToken} = require('../middleware/jwthandler')
+const UserRouter = require('./sub-routers/UserRouter')
+const StyleRouter = require('./sub-routers/StyleRouter')
+const LicenseRouter = require('./sub-routers/LicenseRouter')
+const {getToken, createToken, verifyToken} = require('../../middleware/jwthandler')
 
 Router.get('/:user_id', UserController.GetProfile)
 Router.post('/register', UserController.CreateUser)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Card from '../components/Card'
+import Card from '../components/oldcomponents/Card'
 import { __DeletePost } from '../services/PostService'
 import { __GetProfile } from '../services/UserService'
 

@@ -19,13 +19,15 @@
  
       
 ### Core Technologies:
-<img src="https://img.shields.io/badge/-HTML5-E34F26?style=plastic-square&logo=html5&logoColor=white" />
-<img src="https://img.shields.io/badge/-CSS3-1572B6?style=flat-square&logo=css3" />
-<img src="https://img.shields.io/badge/-JavaScript-black?style=flat-square&logo=javascript" />
-<img src="https://img.shields.io/badge/-ReactJS-black?style=flat-square&logo=react" />
-<img src="https://img.shields.io/badge/-NodeJS-black?style=flat-square&logo=Node.js" />
-<img src="https://img.shields.io/badge/-ExpressJS-yellow?style=flat-square&logo=express" />
-<img src="https://img.shields.io/badge/-MongoDB-black?style=flat-square&logo=mongodb" />
+<div>
+    <img src="https://img.shields.io/badge/-HTML5-E34F26?style=plastic-square&logo=html5&logoColor=white" />
+    <img src="https://img.shields.io/badge/-CSS3-1572B6?style=flat-square&logo=css3" />
+    <img src="https://img.shields.io/badge/-JavaScript-black?style=flat-square&logo=javascript" />
+    <img src="https://img.shields.io/badge/-ReactJS-black?style=flat-square&logo=react" />
+    <img src="https://img.shields.io/badge/-NodeJS-black?style=flat-square&logo=Node.js" />
+    <img src="https://img.shields.io/badge/-ExpressJS-yellow?style=flat-square&logo=express" />
+    <img src="https://img.shields.io/badge/-MongoDB-black?style=flat-square&logo=mongodb" />
+</div>
 
 
 

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import TextInput from '../components/TextInput'
-import { __GetPost, __UpdatePost } from '../services/PostService'
-export default class UpdatePost extends Component {
+import TextInput from '../../components/TextInput'
+import { __UploadPost } from '../../services/PostService'
+
+export default class CreatePost extends Component {
   constructor() {
     super()
     this.state = {
@@ -12,23 +13,6 @@ export default class UpdatePost extends Component {
     }
   }
 
-  componentDidMount() {
-    this.getPost()
-  }
-  getPost = async () => {
-    try {
-      const post = await __GetPost(this.props.match.params.post_id)
-      this.setState({
-        title: post.title,
-        description: post.description,
-        image_url: post.image_url,
-        location: post.location
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   handleChange = ({ target }) => {
     this.setState({ [target.name]: target.value })
   }
@@ -36,7 +20,7 @@ export default class UpdatePost extends Component {
   handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await __UpdatePost(this.state, this.props.match.params.post_id)
+      await __UploadPost(this.state, this.props.currentUser._id)
       this.props.history.push('/profile')
     } catch (error) {
       console.log(error)
@@ -73,7 +57,7 @@ export default class UpdatePost extends Component {
             value={description}
             onChange={this.handleChange}
           />
-          <button>Update</button>
+          <button>Upload</button>
         </form>
       </div>
     )

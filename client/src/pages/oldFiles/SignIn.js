@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import TextInput from '../components/TextInput'
-import { __LoginUser } from '../services/UserService'
+import TextInput from '../../components/oldcomponents/TextInput'
+import { __LoginUser } from '../../services/UserService'
 
 export default class SignIn extends Component {
   constructor() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import TextInput from '../components/TextInput'
-import { __RegisterUser } from '../services/UserService'
+import TextInput from '../../components/TextInput'
+import { __RegisterUser } from '../../services/UserService'
 import '../styles/Signup.css'
 export default class Signup extends Component {
   // TODO Integrate Auth
