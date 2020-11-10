@@ -1,4 +1,4 @@
-# PyCore
+# www.freewebstyles.com
 
 ### *by Collin Didier* 
 
