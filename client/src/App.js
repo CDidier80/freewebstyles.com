@@ -1,20 +1,21 @@
 import React, { Component } from 'react'
 // withRouter added in part 5: authentication lesson
 import { Switch, Route, withRouter } from 'react-router-dom'
-import Home from '../pages/Home'
+import MainPage from './pages/MainPage'
 import LandingPage from './pages/LandingPage'
-import Signup from '../pages/Signup'
-import SignIn from '../pages/SignIn'
-import Discover from '../pages/Discover'
-import Nav from './Nav'
+
+// import Signup from '../pages/Signup'
+// import SignIn from '../pages/SignIn'
+// import Nav from './Nav'
 // start of part 5: authentication imports
-import CreatePost from '../pages/CreatePost'
-import Profile from '../pages/Profile'
-import UpdatePost from '../pages/UpdatePost'
-import ViewPost from '../pages/ViewPost'
-import Layout from './Layout'
-import ProtectedRoute from './components/ProtectedRoute'
+// import CreatePost from '../pages/CreatePost'
+// import Profile from '../pages/Profile'
+// import UpdatePost from '../pages/UpdatePost'
+// import ViewPost from '../pages/ViewPost'
+// import Layout from './Layout'
+// import ProtectedRoute from './components/ProtectedRoute'
 // remember this function import is what lets users stay logged in
+import "./styles/App.css"
 import { __CheckSession } from './services/UserService'
 
 class App extends Component {
@@ -36,54 +37,48 @@ class App extends Component {
   // authentication methods
 
   
-  // this will get a token from localStorage and test it against our __CheckSession function to allow for a secure user authentication.
-  // First we need a token. If a token is present, we will set the user to the active session found by our __CheckSession.
-  // Otherwise, we will set the currentUser to null and clear localStorage
-  verifyTokenValid = async () => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      try {
-          const session = await __CheckSession()
-            this.setState(
-              {
-                currentUser: session,
-                authenticated: true
-              },
-              () => this.props.history.push('/profile')
-            )
-          } catch (error) {
-            this.setState({ currentUser: null, authenticated: false })
-            localStorage.clear()
-          }
-      // Send Api request to verify token
-      // if token valid should set a user to state
-    }
-  }
+  // // this will get a token from localStorage and test it against our __CheckSession function to allow for a secure user authentication.
+  // // First we need a token. If a token is present, we will set the user to the active session found by our __CheckSession.
+  // // Otherwise, we will set the currentUser to null and clear localStorage
+  // verifyTokenValid = async () => {
+  //   const token = localStorage.getItem('token')
+  //   if (token) {
+  //     try {
+  //         const session = await __CheckSession()
+  //           this.setState(
+  //             {
+  //               currentUser: session,
+  //               authenticated: true
+  //             },
+  //             () => this.props.history.push('/profile')
+  //           )
+  //         } catch (error) {
+  //           this.setState({ currentUser: null, authenticated: false })
+  //           localStorage.clear()
+  //         }
+  //     // Send Api request to verify token
+  //     // if token valid should set a user to state
+  //   }
+  // }
   
   // toggleAuthenticated will set the state of our currentUser and whether or not they are authenticated. We will use this when a user logs in or signs out.
-  toggleAuthenticated = (value, user, done) => {
-    this.setState({ authenticated: value, currentUser: user }, () => done())
-  }
+  // toggleAuthenticated = (value, user, done) => {
+  //   this.setState({ authenticated: value, currentUser: user }, () => done())
+  // }
 
   render() {
     return (
-      <main>
+      <main className="App">
         {this.state.pageLoading ? (
           <div>
             <h3>Loading...</h3>
           </div>
         ) : (
           <Switch>
-            <Route
-              exact
-              path="/"
-              component={() => (
-                <LandingPage>
-                  <Home />
-                </LandingPage>
-              )}
-            />
-            <Route
+            {/* <Route exact path="/" component={LandingPage}/> */}
+            <Route exact path="/" component={MainPage}/>
+
+            {/* <Route
               path="/register"
               component={(props) => (
                 <LandingPage>
@@ -107,7 +102,7 @@ class App extends Component {
                   <Discover />
                 </div>
               )}
-            />
+            /> */}
           </Switch>
         )}
       </main>
