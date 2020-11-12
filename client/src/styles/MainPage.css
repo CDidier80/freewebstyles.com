@@ -1,0 +1,21 @@
+.mainPage {
+    margin: 0 auto;
+}
+
+.display {
+    width: 800px;
+    margin: 0 auto;
+}
+
+.iframeWindow {
+    width: 100%;
+}
+.editorWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.editor {
+    width: 50%;
+}

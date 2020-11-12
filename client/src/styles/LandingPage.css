@@ -10,9 +10,9 @@
   #929292, #ffffff, rgb(220, 178, 178), #ffffff, #929292);
   background-size: 4200% 4200%;
 
-  -webkit-animation: AnimationName 100s ease infinite;
-  -moz-animation: AnimationName 100s ease infinite;
-  animation: AnimationName 100s ease infinite;
+  -webkit-animation: AnimationName 50s ease infinite;
+  -moz-animation: AnimationName 50s ease infinite;
+  animation: AnimationName 50s ease infinite;
 
 
 }
@@ -29,6 +29,14 @@
   max-width: 100vw;
   overflow: hidden;
 }
+
+.LogInPanel {
+  position: relative;
+  right: 0;
+}
+
+
+
 
 @-webkit-keyframes AnimationName {
   0%{background-position:0% 2%}
