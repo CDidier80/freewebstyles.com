@@ -1,11 +1,20 @@
 const Router = require('express').Router()
+const StyleRouter = require('./sub-routers/StyleRouter.js')
+const UserRouter = require('./sub-routers/StyleRouter.js')
 
-const UserRouter = require('./sub-routers/UserRouter')
-const CommentRouter = require('./sub-routers/StyleRouter')
-const TravelLogRouter = require('./sub-routers/LicenseRouter')
+// const UserRouter = require('./sub-routers/UserRouter')
 
-Router.use('/users', UserRouter)
-Router.use('/posts', StyleRouter)
-Router.use('/comments', LicenseRouter)
+
+
+// Router.use('/users', UserRouter)
+
+// Router.use('/comments', LicenseRouter)
+
+// Router.use('/AppRouterJs/test', (req, res) => res.send(
+//     { msg: "AppRouter.js Reached via app.use('/APImeetsServerJs', AppRouter) --> app.get('APImeetsServerJs/AppRouterJs/test} in Server.js. When app uses a router, it uses the CRUD methods defined in the router."}))
+
+
+Router.use('/AppRouterJs/StyleRouterJs', StyleRouter)
+Router.use('/AppRouterJs/UserRouterJs', StyleRouter)
 
 module.exports = Router
