@@ -15,6 +15,6 @@ const UserRouter = require('./sub-routers/StyleRouter.js')
 
 
 Router.use('/AppRouterJs/StyleRouterJs', StyleRouter)
-Router.use('/AppRouterJs/UserRouterJs', StyleRouter)
+Router.use('/AppRouterJs/UserRouterJs', UserRouter)
 
 module.exports = Router
