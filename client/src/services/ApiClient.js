@@ -1,7 +1,7 @@
 import axios from 'axios'
-const ApiClient = axios.create({ baseURL: 'http://localhost:3001/api' })
+const ApiClient = axios.create({ baseURL: 'http://localhost:3003/APImeetsServerJs/' })
 
-
+console.log('API Client active')
 
 
 // We will now using axios interceptors to generate a token when accessing our API from the client side to handle authorization.
@@ -13,16 +13,19 @@ const ApiClient = axios.create({ baseURL: 'http://localhost:3001/api' })
 // Step 1: Axios creates tokens -- COMPLETE!
 // next step: the client must check that the token is valid with each user that is authenticated
 // we'll need to use a new route in UserServices.js..
-ApiClient.interceptors.request.use(
-  async (config) => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-  },
-  (err) => Promise.reject(err)
-)
+
+
+
+// ApiClient.interceptors.request.use(
+//   async (config) => {
+//     const token = localStorage.getItem('token')
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`
+//     }
+//     return config
+//   },
+//   (err) => Promise.reject(err)
+// )
 
 
 
