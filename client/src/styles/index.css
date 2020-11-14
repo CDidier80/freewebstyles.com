@@ -13,7 +13,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100%;
   min-width: 100%;
-  background-color: pink;
+  background-color: rbga(0,0,0,0);
 }
 ::-webkit-scrollbar {
   width: 0px; /* Remove scrollbar space */
