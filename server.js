@@ -1,4 +1,4 @@
-const AppRouter = require('./routes/AppRouter')
+const AppRouter = require('./routers/AppRouter')
 const express = require('express')
 const logger = require('morgan')
 const helmet = require('helmet')
@@ -18,8 +18,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // Initialize Middleware
 
 app.disable('X-Powered-By')    // addresses huge security hole in express, conceals which api you're using. 
+
+
+
+
 app.get('/', (req, res) => res.send({ msg: 'Server Working' }))
-app.use('/api', AppRouter)
+// this url is where we tell the AppRouter to operate. Different routers can listen to different urls, 
+// presumeably with different api clients. But, we roll everything into the one api and the one AppRouter with its subrouters
+app.use('/APImeetsServerJs', AppRouter)
+app.get('/APImeetsServerJs/test')   
 app.listen(PORT, async () => {
   try {
     await connection
