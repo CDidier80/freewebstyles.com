@@ -8,7 +8,6 @@ class TriangleSvg extends Component {
       super(props)
     }
 
-  
     render() {
       return ( 
 <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" id="trianglify-overlay">
