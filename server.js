@@ -26,7 +26,7 @@ app.get('/', (req, res) => res.send({ msg: 'Server Working' }))
 // this url is where we tell the AppRouter to operate. Different routers can listen to different urls, 
 // presumeably with different api clients. But, we roll everything into the one api and the one AppRouter with its subrouters
 app.use('/APImeetsServerJs', AppRouter)
-app.get('/APImeetsServerJs/test')   
+// app.get('/APImeetsServerJs/test', (req, res) => res.send({ msg: 'test Working' }))   
 app.listen(PORT, async () => {
   try {
     await connection
