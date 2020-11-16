@@ -16,15 +16,14 @@ import LandingPage from './pages/LandingPage'
 // import ProtectedRoute from './components/ProtectedRoute'
 // remember this function import is what lets users stay logged in
 import "./styles/App.css"
-import { __CheckSession } from './services/UserService'
+import { CheckSessionService } from './services/UserService'
 
 class App extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     // In its state object we will need 2 new key value pairs that we will use to check for authenticated users:
     this.state = {
-      pageLoading: true,
-      // new..
+      authenticated: false,
       currentUser: null, 
       pageLoading: true
     }
@@ -36,37 +35,42 @@ class App extends Component {
 
   // authentication methods
 
-  
+  //  This method is used after a user has already logged in to test whether they have a valid token
   // // this will get a token from localStorage and test it against our __CheckSession function to allow for a secure user authentication.
   // // First we need a token. If a token is present, we will set the user to the active session found by our __CheckSession.
   // // Otherwise, we will set the currentUser to null and clear localStorage
-  // verifyTokenValid = async () => {
-  //   const token = localStorage.getItem('token')
-  //   if (token) {
-  //     try {
-  //         const session = await __CheckSession()
-  //           this.setState(
-  //             {
-  //               currentUser: session,
-  //               authenticated: true
-  //             },
-  //             () => this.props.history.push('/profile')
-  //           )
-  //         } catch (error) {
-  //           this.setState({ currentUser: null, authenticated: false })
-  //           localStorage.clear()
-  //         }
-  //     // Send Api request to verify token
-  //     // if token valid should set a user to state
-  //   }
-  // }
+
+
+  verifyTokenValid = async () => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      try {
+          const session = await CheckSessionService()
+            this.setState(
+              {
+                currentUser: session,
+                authenticated: true
+              },
+              () => this.props.history.push('/mainpage')
+            )
+          } catch (error) {
+            this.setState({ currentUser: null, authenticated: false })
+            localStorage.clear()
+          }
+      // Send Api request to verify token
+      // if token valid should set a user to state
+    }
+  }
   
+
+  // for signing in users
   // toggleAuthenticated will set the state of our currentUser and whether or not they are authenticated. We will use this when a user logs in or signs out.
-  // toggleAuthenticated = (value, user, done) => {
-  //   this.setState({ authenticated: value, currentUser: user }, () => done())
-  // }
+  toggleAuthenticated = (value, user, done) => {
+    this.setState({ authenticated: value, currentUser: user }, () => done())
+  }
 
   render() {
+    const {authenticated, currentUser} = this.state
     return (
       <main className="App">
         {this.state.pageLoading ? (
@@ -75,17 +79,13 @@ class App extends Component {
           </div>
         ) : (
           <Switch>
-            {/* <Route exact path="/" component={LandingPage}/> */}
-            <Route exact path="/" component={MainPage}/>
+            <Route exact path="/" component={(props) => <LandingPage {...props} verifyTokenValid={this.verifyTokenValid}  authenticated={authenticated} currentUser={currentUser} toggleAuthenticated={this.toggleAuthenticated}/>}/>
+            <Route exact path="/main" component={(props) => <MainPage {...props} authenticated={authenticated} verifyTokenValid={this.verifyTokenValid} authenticated={authenticated} currentUser={currentUser} toggleAuthenticated={this.toggleAuthenticated}/>}/>
 
-            {/* <Route
-              path="/register"
-              component={(props) => (
-                <LandingPage>
-                  <Signup {...props} />
-                </LandingPage>
-              )}
-            />
+            {/* <Route path="/register" component={(props) => ( <LandingPage> <Signup {...props} /> </LandingPage>)}/>
+
+
+
             <Route
               path="/login"
               component={(props) => (
