@@ -3,9 +3,11 @@ const StyleController = require('../../Controllers/StyleController')
 
 
 
-// Router.get('/test', (req, res) => res.send("StyleRouter.js reached by way of APImeetsServerJs --> AppRouterJs/StyleRouter --> test"))
+Router.get('/test', (req, res) => res.send("StyleRouter.js reached by way of APImeetsServerJs --> AppRouterJs/StyleRouter --> test"))
 
 // Router.get('/StyleControllerJs/editonestyle/test', (req, res) => res.send("StyleRouter.js reached by way of APImeetsServerJs --> AppRouterJs/StyleRouter --> /StyleControllerJs/test"))
+
+
 
 Router.post('/StyleControllerJs/poststyle', StyleController.PostStyle)
 

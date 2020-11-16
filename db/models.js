@@ -13,7 +13,7 @@ const UserSchema = require('./schemas/UserSchema.js')
 
 
 const StyleModel = model('styles', StyleSchema)
-const UserModel = model('styles', UserSchema)
+const UserModel = model('users', UserSchema)
 
 
 module.exports = {
