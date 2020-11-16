@@ -30,7 +30,7 @@ export default class Ace extends Component {
       return (
         <AceEditor
         mode={mode}
-        theme={this.state.theme}
+        theme={theme}
         onChange={updateFunction}
         name={name}
         editorProps={{ $blockScrolling: true}}
