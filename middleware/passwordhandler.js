@@ -8,6 +8,7 @@ const saltRounds = parseInt(process.env.SALT_ROUNDS) //parse int used because al
 // this method is used only once for creating a new user account. It is called in UserController.js in the CreateUser() function.
 // It is used to "hash" the password -- turning the user's entered password into an undecryptable hashed user digest
 const generatePassword = async (password) => {    // hashing takes time
+     console.log('reached generatePassword() hashing method in passwordhandler.js')
      const password_digest = await bcrypt.hash(password, saltRounds)
      return password_digest
 }
