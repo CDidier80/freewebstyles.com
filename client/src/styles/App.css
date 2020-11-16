@@ -1,19 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Poiret+One&display=swap');
+
 .App {
     margin: 0 0;
     padding: 0 0;
     text-align: center;
     font-size: 0;
-    height: 100vh; 
-    width: 100vw;
+    min-height: 100vh; 
+    min-width: 100vw;
 
-
-	background: linear-gradient(-45deg, rgba(255, 60, 0, 0.213), #c2004a3f, #0098d02e, #00c59735);
+	/* background: linear-gradient(45deg, rgba(255, 0, 0, 0.2) 30%, rgba(109, 0, 106, 0.2)); */
+	/* background: linear-gradient(45deg, rgba(255, 0, 0, 0.2), rgba(255, 255, 255, 0.2) 50%, rgba(4, 0, 255, 0.2)); */
+	background: linear-gradient(45deg, rgba(255, 0, 0, 0.2), rgba(255, 255, 255, 0.2) 50%, rgba(25, 23, 191, 0.2));
 	background-size: 400% 400%;
-	animation: gradient 22s ease infinite;
+	animation: gradient 8s ease infinite;
 
-  
-
-
+	/* background-color: rgba(17, 17, 75, 0.741); */
 
 }
 
