@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../styles/MainPage.css'
-import { GetOneStyleServic, getManyRecentStylesService, getManyUsersRecentStylesService, getManyUsersLikedStylesService} from '../services/StyleService.js'
+import { GetOneStyleService, GetManyRecentStylesService, GetManyUsersRecentStylesService, GetManyUsersLikedStylesService, EditStyleService, DeleteStyleService} from '../services/StyleService.js'
 import Ace from "../components/main-page-components/editors/Ace.js"
 import MiniCard from "../components/main-page-components/MiniCard.js"
 import SubmitForm from "../components/main-page-components/SubmitForm.js"
@@ -16,39 +16,41 @@ const { htmlBoilerplateStart } = require('../components/main-page-components/edi
 class MainPage extends Component {
     // console.log(children)
     constructor(props){
-      super(props)
-      this.state = {
+        super(props)
+        this.state = {
           // props from App.js 
-          toggleAuthenticated: props.toggleAuthenticated,
-          verifyTokenValid: props.verifyTokenValid,
-          authenticated: props.authenticated,
-          currentUser: props.currentUser,
-          goToSignupPage: props.goToSignupPage,
-          //
-          htmlStart: htmlBoilerplateStart,
-          userCSS: "",
-          cssEnd: "</style></head>",
-          userHTML: "",
-          htmlEnd: "</html>",
-          codeIsDisplayed: true,
-          editorHeight: [{maxHeight: "300px"}, {maxHeight: "0px"}],
-          isSubmitPanelVisible: false, 
-          isCreateAccountPromptVisible: false,
-          styleSearchField: "",
-          testBoolean: true,
-          recentlyAddedStyles: [],
-          usersRecentStyles: [],
-          usersLikedStyles: []
-      }
+            toggleAuthenticated: props.toggleAuthenticated,
+            verifyTokenValid: props.verifyTokenValid,
+            authenticated: props.authenticated,
+            currentUser: props.currentUser,
+            goToSignupPage: props.goToSignupPage,
+            //
+            htmlStart: htmlBoilerplateStart,
+            userCSS: "",
+            cssEnd: "</style></head>",
+            userHTML: "",
+            htmlEnd: "</html>",
+            codeIsDisplayed: true,
+            editorHeight: [{maxHeight: "300px"}, {maxHeight: "0px"}],
+            isSubmitPanelVisible: false, 
+            isCreateAccountPromptVisible: false,
+            usersLikedStyles: [],
+            styleSearchField: "",
+            testBoolean: true,
+            usersRecentStyles: [],
+            recentlyAddedStyles: []
+        }
     }
-  
 
+
+    // load styles to be displayed in the various main page sections
     componentDidMount = async() => {
+        const {currentUser, authenticated} = this.state
         try {
-            const recentStyles = await getManyRecentStylesService(authenticated ? 6 : 9)
-            const [usersRecent, usersLiked] = await authenticated ?  () => {
-                const usersRecentStyles = await getManyUsersRecentStylesService(6)
-                const usersLikedStyles = await getManyUsersLikedStylesService(6)
+            const recentStyles = await GetManyRecentStylesService(authenticated ? 6 : 9)
+            const [usersRecent, usersLiked] = await authenticated ? async () => {
+                const usersRecentStyles = await GetManyUsersRecentStylesService(currentUser, 6)
+                const usersLikedStyles = await GetManyUsersLikedStylesService(currentUser, 6)
                 return [usersRecentStyles, usersLikedStyles]} 
                 :
                 [[], []]
@@ -95,17 +97,17 @@ class MainPage extends Component {
     toggleABoolean = (e, propToChange) => { 
         switch (propToChange) {
             case "isSubmitPanelVisible":
-              this.setState({isSubmitPanelVisible: false})
-              break
+                this.setState({isSubmitPanelVisible: false})
+                break
             case "isCreateAccountPromptVisible":
-              this.setState({isCreateAccountPromptVisible: false})
-              break
+                this.setState({isCreateAccountPromptVisible: false})
+                break
             // case "license":
             //   this.setState({license: event.target.value})
             //   break
             default: 
                 console.log("toggleABoolean() switch statement originating in MainPage.js had no matching cases.")
-          }
+            }
     }
     updateHTML = (newValue) => {
         // console.log("updateHTML reached")
@@ -119,14 +121,15 @@ class MainPage extends Component {
 
     render() {
         const {htmlStart, userCSS, cssEnd, userHTML, htmlEnd, codeIsDisplayed, editorHeight, isSubmitPanelVisible, 
-            isCreateAccountPromptVisible, currentUser, authenticated, goToSignupPage, styleSearchField, testBoolean} = this.state
+            isCreateAccountPromptVisible, currentUser, authenticated, goToSignupPage, styleSearchField, recentlyAddedStyles, usersLikedStyles, usersRecentStyles} = this.state
         // console.log("The state of MainPage at render: ", this.state)
         // console.log("this.props of MainPage at rendering: ", this.props)
         // console.log("Current User: ", currentUser)
         // console.log("Authenticated: ", authenticated)
-        console.log("new HTML value: ", userHTML)
-        console.log("new CSS value: ", userCSS)
+        // console.log("new HTML value: ", userHTML)
+        // console.log("new CSS value: ", userCSS)
         // console.log(typeof userHTML)
+        console.log(recentlyAddedStyles)
         console.log('/////////////////////////////////////////////////////////////////')
         return (
             <div className="mainPage">
@@ -151,10 +154,11 @@ class MainPage extends Component {
                 {/* <h1 className="test">{userHTML}</h1> */}
                 <div className="styleGrid">
                     <h1 className="recentlyAdded">Recently Added</h1>
-                    {recentlyAdded.map((style, index) => <MiniCard {...this.state} isUsersOwnStyle={false}/>
-                    {authenticated ? <h1 className="recentlyAdded">Your Recent Styles</h1> : null}
-                    {authenticated ? <h1 className="recentlyAdded">Your Recent Styles</h1> : null}
-
+                    {recentlyAddedStyles.map((style, index) => <MiniCard {...this.state} styleToDisplay={style} isUsersOwnStyle={false}/>)}
+                    {authenticated ? <h1 className="usersRecentStyles">Your Recent Styles</h1> : null}
+                    {authenticated ? usersRecentStyles.map((style, index) => <MiniCard {...this.state} styleToDisplay={style} isUsersOwnStyle={true}/>) : null}
+                    {authenticated ? <h1 className="recentlyAdded">Styles You Liked</h1> : null}
+                    {authenticated ? usersRecentStyles.map((style, index) => <MiniCard {...this.state} styleToDisplay={style} isUsersOwnStyle={true}/>) : null}
                 </div>
                 
             </div>
@@ -164,9 +168,8 @@ class MainPage extends Component {
             </div>
         )
     }
-  
-  }
-//   updateFunction={this.updateHTML}
+}
+
 
   export default MainPage
 
