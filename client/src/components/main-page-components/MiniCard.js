@@ -51,7 +51,7 @@ export default function RecipeReviewCard(props) {
     <Card className={classes.root}>
       <CardHeader
         avatar={<Avatar aria-label="recipe" className={classes.avatar}> R </Avatar>}
-        action={ props.isUsersOwnStyle ? <IconButton aria-label="settings"> <MoreVertIcon /> </IconButton> }
+        action={ props.isUsersOwnStyle ? <IconButton aria-label="settings"> <MoreVertIcon /> </IconButton> : null}
 
         title="Style Name"
         subheader="September 14, 2016"
