@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
-import Ace from "../components/main-page-components/editors/Ace.js"
-import SubmitForm from "../components/main-page-components/SubmitForm.js"
-import CreateAccountPrompt from "../components/main-page-components/SubmitForm.js"
 import '../styles/MainPage.css'
+import { GetOneStyleServic, getManyRecentStylesService, getManyUsersRecentStylesService, getManyUsersLikedStylesService} from '../services/StyleService.js'
+import Ace from "../components/main-page-components/editors/Ace.js"
+import MiniCard from "../components/main-page-components/MiniCard.js"
+import SubmitForm from "../components/main-page-components/SubmitForm.js"
+import CreateAccountPrompt from "../components/main-page-components/CreateAccountPrompt.js"
+import { TextField } from '@material-ui/core'
+import TriangleSvg from '../components/landing-components/TriangleSvg'
 // import TriangleSvg from "../components/landing-components/TriangleSvg.js"
-import { PostStyleService } from '../services/StyleService.js'
+
 
 
 const { htmlBoilerplateStart } = require('../components/main-page-components/editors/htmlBoilerplate.js')
@@ -19,21 +23,90 @@ class MainPage extends Component {
           verifyTokenValid: props.verifyTokenValid,
           authenticated: props.authenticated,
           currentUser: props.currentUser,
+          goToSignupPage: props.goToSignupPage,
           //
           htmlStart: htmlBoilerplateStart,
           userCSS: "",
           cssEnd: "</style></head>",
-          userHTML: "<body><h1>It works!</h1></body>",
+          userHTML: "",
           htmlEnd: "</html>",
           codeIsDisplayed: true,
           editorHeight: [{maxHeight: "300px"}, {maxHeight: "0px"}],
           isSubmitPanelVisible: false, 
           isCreateAccountPromptVisible: false,
-        //   isUserSignedIn: true
-        //   styleData: {styleName: "", tags: [], license: ""}   // be wary of calling state within state?
+          styleSearchField: "",
+          testBoolean: true,
+          recentlyAddedStyles: [],
+          usersRecentStyles: [],
+          usersLikedStyles: []
       }
     }
   
+
+    componentDidMount = async() => {
+        try {
+            const recentStyles = await getManyRecentStylesService(authenticated ? 6 : 9)
+            const [usersRecent, usersLiked] = await authenticated ?  () => {
+                const usersRecentStyles = await getManyUsersRecentStylesService(6)
+                const usersLikedStyles = await getManyUsersLikedStylesService(6)
+                return [usersRecentStyles, usersLikedStyles]} 
+                :
+                [[], []]
+            this.setState({recentlyAddedStyles: recentStyles, usersRecentStyles: usersRecent, usrsLikedStyles: usersLiked})
+        } catch (error) {
+            console.log("Error raised in componentDidMount of MainPage.js:")
+            console.log(error)
+        }
+    }
+    
+
+    updateSearchField = (e) =>  {
+    const newSearchFieldValue = e.target.value
+    this.setState({styleSearchField: newSearchFieldValue});
+    }
+
+    submitStyleSearch = async () => {
+        const styleSearchQuery = this.state.styleSearchField
+        console.log(styleSearchQuery)
+        try {
+            const response = await GetOneStyleService(styleSearchQuery)
+            console.log("Response receieved in MainPage.js: ", response)
+            const {css, html} = response.style
+            this.setState({userCSS: css, userHTML: html})
+            console.log(this.state)
+        } catch (error) {
+            console.log("Error thrown at submitStyleSearch() in MainPage.js: ", error)
+        }
+    }
+
+    // checks whether code is currently displayed and updates the state to the opposite boolean
+    // at re-rendering, the editor wrapper div checks the boolean and sets the correct max-height
+    toggleCode = () => {        
+        this.state.codeIsDisplayed === true ? this.setState({codeIsDisplayed: false}) : this.setState({codeIsDisplayed: true})
+    }
+
+
+    handlePostClick = () => {
+        const {authenticated} = this.state
+        console.log("User authenticated: ", authenticated)
+        authenticated ? this.setState({isSubmitPanelVisible: true}) : this.setState({isCreateAccountPromptVisible: true})
+    }
+
+    toggleABoolean = (e, propToChange) => { 
+        switch (propToChange) {
+            case "isSubmitPanelVisible":
+              this.setState({isSubmitPanelVisible: false})
+              break
+            case "isCreateAccountPromptVisible":
+              this.setState({isCreateAccountPromptVisible: false})
+              break
+            // case "license":
+            //   this.setState({license: event.target.value})
+            //   break
+            default: 
+                console.log("toggleABoolean() switch statement originating in MainPage.js had no matching cases.")
+          }
+    }
     updateHTML = (newValue) => {
         // console.log("updateHTML reached")
         this.setState({userHTML: newValue})
@@ -44,66 +117,20 @@ class MainPage extends Component {
         this.setState({userCSS: newValue})
     }
 
-    onChange = (newValue) =>  {
-    console.log("change", newValue);
-    }
-
-    // checks whether code is currently displayed and updates the state to the opposite boolean
-    // at re-rendering, the editor wrapper div checks the boolean and sets the correct max-height
-    toggleCode = () => {        
-         this.state.codeIsDisplayed === true ? this.setState({codeIsDisplayed: false}) : this.setState({codeIsDisplayed: true})
-    }
-
-
-    handlePostClick = () => {
-        const {authenticated, isSubmitPanelVisible, isCreateAccountFormVisible} = this.state
-        authenticated ? this.setState({isSubmitPanelVisible: true}) : this.setState({isCreateAccountPromptVisible: true})
-    }
-
-    toggleABoolean = (e, propToChange) => { 
-        switch (propToChange) {
-            case "isSubmitPanelVisible":
-              this.setState({isSubmitPanelVisible: false})
-              break
-            // case "tags":
-            //   this.setState({tags: [...event.target.value]})
-            //   break
-            // case "license":
-            //   this.setState({license: event.target.value})
-            //   break
-            default: 
-                console.log("toggleABoolean() switch statement originating in MainPage.js had no matching cases.")
-          }
-    }
-
-    // from here to PostStyleService.js to Server.js to AppRouter to PostStyle subRouter to
-//     postStyle = async (e) => {
-//         e.preventDefault
-//         if (this.state.currentUserID === null) {
-//             this.props.history.push('/redirectedmotherfucker')
-//             return
-//         }
-//         let {htmlStart, userCSS, cssEnd, userHTML, htmlEnd} = this.state
-//         const fullCode = htmlStart + userCSS + cssEnd + userHTML + htmlEnd
-//         try {
-//             await __postAStyle(
-//                 {fullCode: fullCode, userHTML: userHTML, userCSS: userCSS},
-//                 this.props.currentUser.__id)
-//         } catch (error) {
-//             console.log(error)
-//         }
-//    }
-
     render() {
         const {htmlStart, userCSS, cssEnd, userHTML, htmlEnd, codeIsDisplayed, editorHeight, isSubmitPanelVisible, 
-            isCreateAccountPromptVisible, currentUser, authenticated} = this.state
-        console.log("The state of MainPage at render: ", this.state)
-        console.log("this.props of MainPage at rendering: ", this.props)
-        console.log("Current User: ", currentUser)
-        console.log("Authenticated: ", authenticated)
+            isCreateAccountPromptVisible, currentUser, authenticated, goToSignupPage, styleSearchField, testBoolean} = this.state
+        // console.log("The state of MainPage at render: ", this.state)
+        // console.log("this.props of MainPage at rendering: ", this.props)
+        // console.log("Current User: ", currentUser)
+        // console.log("Authenticated: ", authenticated)
+        console.log("new HTML value: ", userHTML)
+        console.log("new CSS value: ", userCSS)
+        // console.log(typeof userHTML)
         console.log('/////////////////////////////////////////////////////////////////')
         return (
             <div className="mainPage">
+                <TriangleSvg />
                 <div className="display">
                     <iframe title="mainIframe" className="iframeWindow" srcDoc={htmlStart + userCSS + cssEnd + userHTML + htmlEnd}></iframe>
                     <div className="iframeButtonPanel">
@@ -112,22 +139,34 @@ class MainPage extends Component {
                     <h3 className="languageHeader htmlHeader">HTML</h3>
                     <h3 className="languageHeader cssHeader">CSS</h3>
                     <div className="editorWrapper" style={codeIsDisplayed ? editorHeight[0] : editorHeight[1]}>
-                        <Ace className="editor" updateFunction={this.updateHTML} mode={'html'} theme={'github'} name={'htmlEditor'}/>
-                        <Ace className="editor" updateFunction={this.updateCSS} mode={'css'} theme={'github'} name={'cssEditor'}/>
+                        <Ace {...this.state} className="editor" val={userHTML} mode={'html'} updateFunction={this.updateHTML} theme={'github'} name={'htmlEditor'}/>
+                        <Ace {...this.state} className="editor" val={userCSS} updateFunction={this.updateCSS} mode={'css'} theme={'github'} name={'cssEditor'}/>
                     </div>
                     <button className="postButton" onClick={()=>this.handlePostClick()}>Post</button>
-                    {isSubmitPanelVisible ? <SubmitForm toggleABoolean={this.toggleABoolean} userCSS={userCSS} userHTML={userHTML}/> : null}
-                    {isCreateAccountPromptVisible ? <CreateAccountPrompt /> : null}
+                    <TextField className="styleSearchField" onChange={(e)=>this.updateSearchField(e)}>{styleSearchField}</TextField>
+                    <button className="submitStyleSearchButton" onClick={()=>this.submitStyleSearch()}>search</button>
+                    {isSubmitPanelVisible ? <SubmitForm toggleABoolean={this.toggleABoolean} currentUser={currentUser} userCSS={userCSS} userHTML={userHTML}/> : null}
+                    {isCreateAccountPromptVisible ? <CreateAccountPrompt toggleABoolean={this.toggleABoolean} goToSignupPage={goToSignupPage}/> : null}
 
+                {/* <h1 className="test">{userHTML}</h1> */}
+                <div className="styleGrid">
+                    <h1 className="recentlyAdded">Recently Added</h1>
+                    {recentlyAdded.map((style, index) => <MiniCard {...this.state} isUsersOwnStyle={false}/>
+                    {authenticated ? <h1 className="recentlyAdded">Your Recent Styles</h1> : null}
+                    {authenticated ? <h1 className="recentlyAdded">Your Recent Styles</h1> : null}
 
                 </div>
+                
+            </div>
+                
+                
                 {/* <TriangleSvg /> */}
             </div>
         )
     }
   
   }
-  
+//   updateFunction={this.updateHTML}
 
   export default MainPage
 
