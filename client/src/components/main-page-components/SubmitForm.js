@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { PostStyleService } from '../../services/StyleService.js'
+
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 // import InputLabel from '@material-ui/core/InputLabel';
@@ -16,11 +18,13 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ClearIcon from '@material-ui/icons/Clear';
 
 
+
 export default class SubmitForm extends Component {
     constructor(props){
         super(props)
         // console.log(this.props.userCSS)
         this.state = {
+            currentUser: props.currentUser,
             toggleABoolean: props.toggleABoolean,
             userCSS: props.userCSS,
             userHTML: props.userHTML,
@@ -32,9 +36,8 @@ export default class SubmitForm extends Component {
             dense: false,
             tagOneValue: "",
             tagTwoValue: "",
+            tagThreeValue: "",
             userID: ""
-
-
         }
     }
 
@@ -86,17 +89,28 @@ export default class SubmitForm extends Component {
         return ({sourceLinks: [...sourceLinksCopy]})
     })
 
-    submitStyle = (e) => {
+    submitStyle = async (e) => {
         e.preventDefault()
-        // add all tags to an array
-        const {userCSS, userHTML, styleName, userID} = this.state
-        console.log(userCSS, userHTML)
-        const {tagOneValue, tagTwoValue, tagThreeValue} = this.state
-        const tags = [tagOneValue !== "" ? tagOneValue : null, tagTwoValue !== "" ? tagTwoValue : null, tagThreeValue !== "" ? tagThreeValue : null]
-        console.log(tags)
-        // tagOneValue != "" ? tags.push(tagOneValue) : null
-        // tagTwoValue != "" ? tags.push(tagOneValue) : null
-        // tagThreeValue != "" ? tags.push(tagOneValue) : null
+        // console.log(userCSS, userHTML)
+        const {tagOneValue, tagTwoValue, tagThreeValue, userCSS, userHTML, styleName, currentUser} = this.state
+        const chosenTags = []
+        const tags = [tagOneValue, tagTwoValue, tagThreeValue]
+        tags.forEach ((tag)=>{
+            if (tag !== "") {
+                chosenTags.push(tag)
+            }
+        })
+
+        const requestBody = {html: userHTML, css: userCSS, username: currentUser, style_name: styleName, tags: chosenTags}
+        // console.log("Chosen tags: ", chosenTags)
+        // console.log("Tags assembled in place: ", tags)
+        console.log("Request Body: ", requestBody)
+        try {
+            const StylePostResponse = await PostStyleService(requestBody)
+            console.log(StylePostResponse)
+        } catch (error) {
+            console.log(error, "This error was thrown in the submitStyle() function of SubmitForm.js")
+        }
 
 
     }
@@ -109,6 +123,7 @@ export default class SubmitForm extends Component {
         // select documentation: https://material-ui.com/components/selects/#select
         
         const {styleName, tags, tagOptions, sourceLinks, toggleABoolean, dense, sourceCount, tagOneValue, tagTwoValue, tagThreeValue} = this.state
+        console.log("styleName value at render: ", styleName)
         return (
             <div className="customBackdrop" id="backdrop" onClick={(e) => toggleABoolean(e, "isSubmitPanelVisible")}>
                 <form className={'form'} onClick={(e)=>e.stopPropagation()}>
