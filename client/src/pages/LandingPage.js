@@ -80,8 +80,8 @@ class LandingPage extends Component {
     return (
       <div className="landingPage">
         <TriangleSvg />
-        {eventTarget === "loginLink" ? <LogInForm className="LogInPanel" panelState={eventTarget} formSubmit={this.submitLogIn} updateField={this.updateField}/> : null}
-        {eventTarget === "signupLink" ? <LogInForm className="LogInPanel" panelState={eventTarget} formSubmit={this.submitSignUp} updateField={this.updateField}/> : null}
+        {eventTarget === "loginLink" ? <LogInForm styleChoice={"landingStyles"} className="LogInPanel" panelState={eventTarget} formSubmit={this.submitLogIn} updateField={this.updateField}/> : null}
+        {eventTarget === "signupLink" ? <LogInForm styleChoice={"landingStyles"} className="LogInPanel" panelState={eventTarget} formSubmit={this.submitSignUp} updateField={this.updateField}/> : null}
 
         <div className="landingPageGreeting landingPageLeft">
           <div className="webstylesWrapper">          
