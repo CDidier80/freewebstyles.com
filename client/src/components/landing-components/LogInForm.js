@@ -26,7 +26,7 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const landingStyles = makeStyles((theme) => ({
   root: {
     "background-color": "rgba(255,255,255,.4)",
     height: '100vh',
@@ -61,8 +61,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const signupStyles = makeStyles((theme) => ({
+  root: {
+    "background-color": "rgba(255,255,255,.4)",
+    height: '100vh',
+    width: '45vw',
+    position: "absolute", 
+    left: "50%",
+    transform: "translate(-50%, 0)"
+  },
+  transparentWhite: {
+    "background-color": "rgba(255,255,255,.4)",
+  },
+  paper: {
+    margin: theme.spacing(8, 4),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: "rgba(255,255,255,.4)",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+    "background-color": "rgba(255,255,255)",
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    "background-color": "#2196F3",
+    "font-weight": "bold"
+
+  },
+}));
+
 export default function LogInForm(props) {
-  const classes = useStyles()
+  const styleChoice = props.styleChoice
+  const classes = styleChoice === "landingStyles" ? landingStyles() : signupStyles()
   const {panelState, updateField, formSubmit} = props
   let isSigningUp = panelState === "signupLink" ? true : false
   return (
