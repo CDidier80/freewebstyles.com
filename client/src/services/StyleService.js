@@ -10,6 +10,45 @@ export const PostStyleService = async (formData) => {
 }
 
 
+export const GetOneStyleService = async (styleSearchQuery) => {
+  try {
+    const res = await ApiClient.get(`/StyleRouterJs/StyleControllerJs/getonestyle/${styleSearchQuery}`)
+    console.log("Response receieved from backend in StyleService.js GetOneStyleService: ", res)
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const GetManyRecentStylesService = async (numToGet) => {
+  try {
+    const res = await ApiClient.get(`/StyleRouterJs/StyleControllerJs/getManyRecentStyles/${numToGet}`)
+    console.log("Response receieved from backend in StyleService.js GetOneStyleService: ", res)
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const GetManyUsersRecentStylesService = async (currentUser, numToGet) => {
+  try {
+    const res = await ApiClient.get(`/StyleRouterJs/StyleControllerJs/getusersrecentstyles/${currentUser}/${numToGet}`)
+    console.log("Response receieved from backend in StyleService.js GetManyUsersRecentStylesService: ", res)
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const GetManyUsersLikedStylesService = async (currentUser, numToGet) => {
+  try {
+    const res = await ApiClient.get(`/StyleRouterJs/StyleControllerJs/getmanylikedstyles/${currentUser}/${numToGet}}`)
+    console.log("Response receieved from backend in StyleService.js GetManyUsersLikedStylesService: ", res)
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
 
 
 
@@ -25,16 +64,6 @@ export const PostStyleService = async (formData) => {
 //     throw error
 //   }
 // }
-
-export const GetOneStyleService = async (styleSearchQuery) => {
-  try {
-    const res = await ApiClient.get(`/StyleRouterJs/StyleControllerJs/getonestyle/${styleSearchQuery}`)
-    console.log("Response receieved from backend in StyleService.js GetOneStyleService: ", res)
-    return res.data
-  } catch (error) {
-    throw error
-  }
-}
 
 // export const __UpdatePost = async (formData, postId) => {
 //   try {
