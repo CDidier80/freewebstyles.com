@@ -2,6 +2,7 @@
 const { StyleModel, UserModel } = require('../db/Models')
 
 
+// POST controller method
 const PostStyle = async (req, res) => {
     const body = req.body
     console.log('PostStyle controller function reached')
@@ -19,6 +20,9 @@ const PostStyle = async (req, res) => {
     await res.send({style})
 }
 
+
+
+// GET controller methods
 const GetOneStyle = async (req, res) => {
   console.log("GetOneStyle() function reached in StyleController.js")
   const style_name = req.params.style_name
@@ -28,11 +32,49 @@ const GetOneStyle = async (req, res) => {
   res.send({ style })
 }
 
+
+const GetManyRecentStyles = async (req, res) => {
+  console.log("GetManyRecentStyles() function reached in StyleController.js")
+  const numToGet = parseInt(req.params.numToGet)
+  console.log("numToGet value assigned by req.params.numToGet: ", numToGet)
+  const styles = await StyleModel.find().sort({ _id: -1 }).limit(numToGet)
+  console.log("Styles grouped for response by GetManyRecentStyles(): ", styles)
+  res.send(styles)
+}
+
+
+// https://stackoverflow.com/questions/33627238/mongoose-find-with-multiple-conditions
+const GetUsersRecentStyles = async (req, res) => {
+  console.log("GetManyRecentStyles() function reached in StyleController.js")
+  const numToGet = parseInt(req.params.numToGet)
+  const username =  req.params.currentUser
+  const creator = await UserModel.findOne({username: username})
+  console.log("numToGet and currentUser values assigned by req.params: ", numToGet, currentUser)
+  const styles = await StyleModel.find({creator: creator._id}).sort({ _id: -1 }).limit(numToGet)
+  console.log("Styles grouped for response by GetManyRecentStyles(): ", styles)
+  res.send(styles)
+}
+
+
+const GetManyLikedStyles = async (req, res) => { 
+  console.log("GetManyRecentStyles() function reached in StyleController.js")
+  const numToGet = parseInt(req.params.numToGet)
+  const username =  req.params.currentUser
+  const currentUser = await UserModel.findOne({username: username})
+  console.log("numToGet and currentUser values assigned by req.params: ", numToGet, currentUser)
+  const styles = await StyleModel.find( {style_name: { $in : currentUser.liked_styles}}).sort({ _id: -1 }).limit(numToGet)
+  console.log("Styles grouped for response by GetManyLikedStyles(): ", styles)
+  res.send(styles)
+}
+
+
+// DELETE controller method
 const DeleteOneStyle = async (req, res) => {
     const styleToDelete = await StyleModel.findOne({style_name: req.body.style_name})
     await StyleModel.deleteOne(styleToDelete)
     res.send({ msg: 'Style deleted' })
   }
+
 
 const EditOneStyle = async (req, res) => {
   console.log("EditOneStyle controller function reached")
@@ -54,7 +96,11 @@ module.exports = {
   PostStyle,
   GetOneStyle,
   DeleteOneStyle,
-  EditOneStyle
+  EditOneStyle, 
+  GetManyRecentStyles,
+  GetUsersRecentStyles,
+  GetManyLikedStyles,
+
 }
 
 
