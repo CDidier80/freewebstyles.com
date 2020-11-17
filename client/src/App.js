@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { Switch, Route, withRouter } from 'react-router-dom'
 import MainPage from './pages/MainPage'
 import LandingPage from './pages/LandingPage'
+import SignupPage from './pages/SignupPage'
+
 
 // import Signup from '../pages/Signup'
 // import SignIn from '../pages/SignIn'
@@ -17,6 +19,7 @@ import LandingPage from './pages/LandingPage'
 // remember this function import is what lets users stay logged in
 import "./styles/App.css"
 import { CheckSessionService } from './services/UserService'
+import { SvgIcon } from '@material-ui/core'
 
 class App extends Component {
   constructor(props) {
@@ -25,7 +28,8 @@ class App extends Component {
     this.state = {
       authenticated: false,
       currentUser: null, 
-      pageLoading: true
+      pageLoading: true,
+      loginPageDefault: "",
     }
   }
 
@@ -69,8 +73,18 @@ class App extends Component {
     this.setState({ authenticated: value, currentUser: user }, () => done())
   }
 
+
+  // if it doesnt work, try flipping last 2 lines
+  goToSignupPage = async (e) => {
+    e.stopPropagation()
+    const linkClassName = e.target.className
+    console.log('Link Class Name :', linkClassName)
+    await this.setState({loginPageDefault: linkClassName})
+    await this.props.history.push('/login')
+}
+
   render() {
-    const {authenticated, currentUser} = this.state
+    const {authenticated, currentUser, loginPageDefault} = this.state
     return (
       <main className="App">
         {this.state.pageLoading ? (
@@ -80,7 +94,8 @@ class App extends Component {
         ) : (
           <Switch>
             <Route exact path="/" component={(props) => <LandingPage {...props} verifyTokenValid={this.verifyTokenValid}  authenticated={authenticated} currentUser={currentUser} toggleAuthenticated={this.toggleAuthenticated}/>}/>
-            <Route exact path="/main" component={(props) => <MainPage {...props} authenticated={authenticated} verifyTokenValid={this.verifyTokenValid} authenticated={authenticated} currentUser={currentUser} toggleAuthenticated={this.toggleAuthenticated}/>}/>
+            <Route exact path="/main" component={(props) => <MainPage {...props} goToSignupPage={this.goToSignupPage} authenticated={authenticated} verifyTokenValid={this.verifyTokenValid} authenticated={authenticated} currentUser={currentUser} toggleAuthenticated={this.toggleAuthenticated}/>}/>
+            <Route exact path="/login" component={(props) => <SignupPage {...props} loginPageDefault={loginPageDefault} authenticated={authenticated} verifyTokenValid={this.verifyTokenValid} authenticated={authenticated} currentUser={currentUser} toggleAuthenticated={this.toggleAuthenticated}/>}/>
 
             {/* <Route path="/register" component={(props) => ( <LandingPage> <Signup {...props} /> </LandingPage>)}/>
 
