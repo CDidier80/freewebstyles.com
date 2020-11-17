@@ -16,29 +16,29 @@ export default class Ace extends Component {
     constructor(props){
       super(props)
       this.state = {
+        
+          // props: props,
           mode: this.props.mode,
           // theme: this.props.theme,
           theme: "idle_fingers",
-          name: this.props.name,
-          updateFunction: this.props.updateFunction
- 
+          name: props.name,
+          updateFunction: props.updateFunction,
+          bla: props.bla,
+          message: props.message, 
+          testBoolean: props.testBoolean
       } 
     }
   
     render() {
-      const {mode, theme, name, updateFunction} = this.state
+      const {mode, theme, name, updateFunction, bla} = this.state
+      console.log(this.props)
       return (
-        <AceEditor
-        mode={mode}
-        theme={theme}
-        onChange={updateFunction}
-        name={name}
-        editorProps={{ $blockScrolling: true}}
+        <AceEditor mode={mode} theme={theme} onChange={updateFunction} name={name} value={name === "htmlEditor" ? this.props.userHTML : this.props.userCSS } editorProps={{ $blockScrolling: true}} />
         // height={this.props.height}
         // width={this.height.width}
-        />
+
       )}
 }
   
- 
+// onChange={updateFunction}
   
