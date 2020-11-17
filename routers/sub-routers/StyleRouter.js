@@ -11,7 +11,15 @@ Router.get('/test', (req, res) => res.send("StyleRouter.js reached by way of API
 
 Router.post('/StyleControllerJs/poststyle', StyleController.PostStyle)
 
+// get style methods
 Router.get('/StyleControllerJs/getonestyle/:style_name', StyleController.GetOneStyle)
+Router.get('/StyleControllerJs/getManyRecentStyles/:numToGet', StyleController.GetManyRecentStyles)
+Router.get('/StyleControllerJs/getusersrecentstyles/:currentUser/:numToGet', StyleController.GetUsersRecentStyles)
+Router.get('/StyleControllerJs/getmanylikedstyles/:currentUser/:numToGet', StyleController.GetManyLikedStyles)
+
+
+
+
 
 Router.delete('/StyleControllerJs/deleteonestyle', StyleController.DeleteOneStyle)
 
