@@ -1,23 +1,18 @@
 
-const { StyleModel } = require('../db/Models')
+const { StyleModel, UserModel } = require('../db/Models')
 
 
 const PostStyle = async (req, res) => {
     const body = req.body
     console.log('PostStyle controller function reached')
     console.log('req.body: ', req.body)
-    // const chosenLicense = req.body.license_name
-    // try {
-    //   LicenseModel.findOne({ license_name: chosenLicense })
-    // } catch (error) {
-    //     throw error
-    // }
+    const creator = await UserModel.findOne({username: body.username})
     const style = new StyleModel({
         html: body.html,
         css: body.css,
-        creator: body.creator,
+        creator: creator._id,
         style_name: body.style_name,
-        license_name: body.license_name
+        tags: body.tags
         // upvote key not included--it should always default to 0
     })
     await style.save()
@@ -25,12 +20,16 @@ const PostStyle = async (req, res) => {
 }
 
 const GetOneStyle = async (req, res) => {
-  const style = await StyleModel.findById(req.body.style_id)
+  console.log("GetOneStyle() function reached in StyleController.js")
+  const style_name = req.params.style_name
+  console.log("style_name value assigned by req.params.style_name: ", style_name)
+  const style = await StyleModel.findOne({style_name: style_name})
+  // const style = await StyleModel.findById(req.body.style_id)
   res.send({ style })
 }
 
 const DeleteOneStyle = async (req, res) => {
-    const styleToDelete = StyleModel.findOne({style_name: req.body.style_name})
+    const styleToDelete = await StyleModel.findOne({style_name: req.body.style_name})
     await StyleModel.deleteOne(styleToDelete)
     res.send({ msg: 'Style deleted' })
   }
