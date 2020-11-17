@@ -1,7 +1,7 @@
 const { Schema } = require('mongoose')
 
 module.exports = new Schema(
-  {
+  {      
     html: {type: String, required: true, index: true},  // user html
     css: {type: String, default: 0, required: true},    // user css
     creator: {type: Schema.Types.ObjectId, ref: 'users', required: true},
