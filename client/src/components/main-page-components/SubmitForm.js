@@ -43,17 +43,17 @@ export default class SubmitForm extends Component {
 
     updateField = (event, fieldToUpdate) => {
         switch (event.target.id) {
-          case "styleName":
-            this.setState({styleName: event.target.value})
-            break
-          case "tags":
-            this.setState({tags: [...event.target.value]})
-            break
-          case "license":
-            this.setState({license: event.target.value})
-            break
-          default:
-              console.log("updateField() switch statement originating in SubmitForm.js subcomponent had no matching cases.")
+            case "styleName":
+                this.setState({styleName: event.target.value})
+                break
+            case "tags":
+                this.setState({tags: [...event.target.value]})
+                break
+            case "license":
+                this.setState({license: event.target.value})
+                break
+            default:
+                console.log("updateField() switch statement originating in SubmitForm.js subcomponent had no matching cases.")
         }
     }
     
