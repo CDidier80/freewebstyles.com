@@ -1,15 +1,21 @@
   import ApiClient from './ApiClient'
 
-export const PostStyleService = async (formData, userId) => {
+export const PostStyleService = async (formData) => {
   try {
-    const res = await ApiClient.post(`/AppRouterJs/StyleRouterJs/StyleControllerJs/poststyle/?active=true`, formData)
+    const res = await ApiClient.post(`/StyleRouterJs/StyleControllerJs/poststyle/?active=true`, formData)
     return res.data
   } catch (error) {
     throw error
   }
 }
 
-// export const __GetPosts = async (page, limit) => {
+
+
+
+
+
+// I THINK THIS IS A GET MANY
+// export const GetOnePostService = async (page, limit) => {
 //   try {
 //     const res = await ApiClient.get(
 //       `/posts?page=${page || 1}&limit=${limit || 10}`
@@ -20,14 +26,15 @@ export const PostStyleService = async (formData, userId) => {
 //   }
 // }
 
-// export const __GetPost = async (postId) => {
-//   try {
-//     const res = await ApiClient.get(`/posts/${postId}`)
-//     return res.data
-//   } catch (error) {
-//     throw error
-//   }
-// }
+export const GetOneStyleService = async (styleSearchQuery) => {
+  try {
+    const res = await ApiClient.get(`/StyleRouterJs/StyleControllerJs/getonestyle/${styleSearchQuery}`)
+    console.log("Response receieved from backend in StyleService.js GetOneStyleService: ", res)
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
 
 // export const __UpdatePost = async (formData, postId) => {
 //   try {
