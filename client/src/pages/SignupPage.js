@@ -4,8 +4,6 @@ import TriangleSvg from "../components/landing-components/TriangleSvg.js"
 import LogInForm from "../components/landing-components/LogInForm.js"
 import { CreateUserService, LoginUserService } from '../services/UserService'
 
-
-
 class SignupPage extends Component {
   // console.log(children)
   constructor(props){
@@ -17,9 +15,7 @@ class SignupPage extends Component {
         authenticated: props.authenticated,
         currentUser: props.currentUser,
         //
-
         loginPageDefault: props.loginPageDefault,
-
         eventTarget: "",
         username: "",
         email: "",
@@ -45,21 +41,19 @@ class SignupPage extends Component {
   }
 
   submitSignUp = (e) => {
-    // e.preventDefault()
     const formData = {username: this.state.username, email: this.state.email, password: this.state.password}
-    // console.log(formData)
     CreateUserService(formData)
   }
 
   submitLogIn = async (e) => {
-    console.log('submitLogin() fired')
+    // console.log('submitLogin() fired')
     const {toggleAuthenticated, email, password} = this.state
     e.preventDefault()
     const formData = {email: email, password: password}
-    console.log("formData sent to back-end: ", formData)
+    // console.log("formData sent to back-end: ", formData)
     const responseData =  await LoginUserService(formData)
-    console.log("Response received: ",responseData)
-    console.log("Username received as part of responseData: ", responseData.user.username)
+    // console.log("Response received: ",responseData)
+    // console.log("Username received as part of responseData: ", responseData.user.username)
     toggleAuthenticated(true, responseData.user.username, ()=>this.props.history.push('/main'))
   }
 
@@ -94,7 +88,6 @@ class SignupPage extends Component {
       </div>
     )
   }
-
 }
 
 export default SignupPage

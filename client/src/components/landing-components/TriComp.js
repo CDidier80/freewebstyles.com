@@ -3,10 +3,6 @@ import TriangleSvg from "./TriangleSvg.js"
 import React, { Component } from 'react'
 // const trianglify = require('trianglify')
 
-
-
-
-
 // const TriangleSvg = () => {
 //     const TriangleSvg = trianglify({
 //         height: window.innerHeight,
@@ -24,7 +20,6 @@ import React, { Component } from 'react'
 //     return TriangleSvg
 // }
 
-
 // let instance = TriangleSvg()
 
 
@@ -36,18 +31,7 @@ class TriComp extends Component {
           key: "value"
       }
     }
-  
 
-    // Optional - set the initial state or run any other code needed when the component finishes mounting
-    // componentDidMount (){
-    //   try {
-    //       this.setState((prevState) => ({
-    //          // set initial state here
-    //       }))
-    //   } catch (error) {
-    //       console.log(error)
-    //   }
-    // }
   
     render() {
     // console.log(TriangleSvg())

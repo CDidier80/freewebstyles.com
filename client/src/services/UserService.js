@@ -34,12 +34,7 @@ export const LoginUserService = async (formData) => {
   }
 }
 
-// With authentication being integrated, the client must check that the token created by Axios is valid with each user that is authenticated
-//  we'll need to use a new route 
-//  We need a new function export that we will call __CheckSession
-// This function will connect to our API's (back-end) users/refresh/session endpoint and respond with verified token data if it exists and refresh the current user's session if it does.
 // This service allows a user to remain logged in as they use our application. 
-
 export const CheckSessionService = async() => {
   try{
     const res = await ApiClient.get('/AppRouterJs/UserRouterJs/UserControllerJs/refresh/session')
@@ -48,9 +43,3 @@ export const CheckSessionService = async() => {
     throw error
   }
 }
-
-
-
-// STEP 2: COMPLETE 
-
-// Next, we need to create a new component in our /client/src/components directory called ProtectedRoute.js.......

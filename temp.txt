@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Poiret+One&display=swap');
+
+html {
+    background: linear-gradient(to right, rgb(26, 42, 108), rgb(178, 31, 31), rgb(253, 187, 45));
+}
+
+p {
+    position: absolute;
+    left: 50%;
+    top: 33%;
+    transform: translate(-50%);
+    font-size: 24px;
+    color: white;
+    font-family: "Poiret One";
+}

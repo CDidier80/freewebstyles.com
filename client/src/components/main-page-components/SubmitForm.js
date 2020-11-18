@@ -1,28 +1,22 @@
 import React, { Component } from 'react'
-import { PostStyleService } from '../../services/StyleService.js'
-
+import { EditOneStyleService, PostStyleService } from '../../services/StyleService.js'
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
-// import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import tagOptions from '../../data-exports/allTagOptions'
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import '../../styles/SubmitForm.css'
-
 import IconButton from '@material-ui/core/IconButton';
-// import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ClearIcon from '@material-ui/icons/Clear';
 
 
-
 export default class SubmitForm extends Component {
     constructor(props){
         super(props)
-        // console.log(this.props.userCSS)
         this.state = {
             currentUser: props.currentUser,
             toggleABoolean: props.toggleABoolean,
@@ -91,8 +85,7 @@ export default class SubmitForm extends Component {
 
     submitStyle = async (e) => {
         e.preventDefault()
-        // console.log(userCSS, userHTML)
-        const {tagOneValue, tagTwoValue, tagThreeValue, userCSS, userHTML, styleName, currentUser} = this.state
+        const {tagOneValue, tagTwoValue, tagThreeValue, userCSS, userHTML, styleName, currentUser, toggleABoolean} = this.state
         const chosenTags = []
         const tags = [tagOneValue, tagTwoValue, tagThreeValue]
         tags.forEach ((tag)=>{
@@ -100,10 +93,7 @@ export default class SubmitForm extends Component {
                 chosenTags.push(tag)
             }
         })
-
         const requestBody = {html: userHTML, css: userCSS, username: currentUser, style_name: styleName, tags: chosenTags}
-        // console.log("Chosen tags: ", chosenTags)
-        // console.log("Tags assembled in place: ", tags)
         console.log("Request Body: ", requestBody)
         try {
             const StylePostResponse = await PostStyleService(requestBody)
@@ -111,31 +101,42 @@ export default class SubmitForm extends Component {
         } catch (error) {
             console.log(error, "This error was thrown in the submitStyle() function of SubmitForm.js")
         }
-
+        toggleABoolean(e, "isSubmitPanelVisible")
 
     }
 
- 
+    editOneStyle = async (e) => {
+        e.preventDefault()
+        const {tagOneValue, tagTwoValue, tagThreeValue, toggleABoolean, styleName} = this.state
+        const chosenTags = []
+        const tags = [tagOneValue, tagTwoValue, tagThreeValue]
+        tags.forEach ((tag)=>{
+            if (tag !== "") {
+                chosenTags.push(tag)
+            }
+        })
+        const requestBody = {style_name: styleName, tags: chosenTags}
+        console.log("Request Body: ", requestBody)
+        console.log(this.props.styleNameToEdit)
+        try {
+            const EditStyleResponse = await EditOneStyleService(requestBody, this.props.styleNameToEdit)
+            console.log(EditStyleResponse)
+        } catch (error) {
+            console.log(error, "This error was thrown in the editOneStyle() function of SubmitForm.js")
+        }
+        toggleABoolean(e, "isSubmitPanelVisible")
+        }
+    
     render() {
-        // removed from MenuItems: style={getStyles(name, personName, theme)}
-        // removed from Select: input={<Input />}  onChange={handleChange} 
-        // MUST PUT IN A HANDLE CHANGE FOR SELECT
-        // select documentation: https://material-ui.com/components/selects/#select
-        
         const {styleName, tags, tagOptions, sourceLinks, toggleABoolean, dense, sourceCount, tagOneValue, tagTwoValue, tagThreeValue} = this.state
         console.log("styleName value at render: ", styleName)
         return (
             <div className="customBackdrop" id="backdrop" onClick={(e) => toggleABoolean(e, "isSubmitPanelVisible")}>
                 <form className={'form'} onClick={(e)=>e.stopPropagation()}>
-
-                    
-                    <p className="formTitle">Add Your Style</p>
+                    <p className="formTitle">{this.props.isEditMode ? "Edit Your Style" : "Add Your Style" } </p>
                     <TextField variant="outlined" margin="normal" required fullWidth id="styleName" label="Choose a name for your style" name="styleName" autoFocus onChange={(e)=>this.updateField(e, 'styleName')}/>
-
-
                     <div className="tagContainer">
                         <p className="threeTagsText">Choose up to 3 tags</p>
-
                         <Select variant="filled" className="tagSelectors" labelId={"Tag #1"} id={"Tag #1"} value={tagOneValue}>
                             {tagOptions.map((option, index) => (<MenuItem key={`TagOne${option}`} value={option} className={"Tag #1"} onClick={(e)=>this.pickTag(e, 1)}>{option}</MenuItem>))}  
                         </Select>
@@ -146,17 +147,12 @@ export default class SubmitForm extends Component {
                             {tagOptions.map((option, index) => (<MenuItem key={`TagThree${option}`} value={option} className={"Tag #3"} onClick={(e)=>this.pickTag(e, 3)}>{option}</MenuItem>))} 
                         </Select>
                     </div>
-
-
                     <div className="creditOriginalWrapper">
                         <p className="creditInstructions">Link to any non-original open source code you used.</p>
                         <Fab size='small' color="primary" aria-label="add" className="addLinkButton" onClick={()=>this.addSourceLink()}>
                             <AddIcon />
                         </Fab>
                     </div>
-
-
-
                     {sourceLinks.length > 0 ?                     
                         <List dense={dense}>
                             {sourceLinks.map((link, index) => (
@@ -171,15 +167,9 @@ export default class SubmitForm extends Component {
                             ))}
                         </List>
                     : null}
-
-                <button onClick={(e)=>this.submitStyle(e)}>Submit</button>
+                <button className="submitFormButton" onClick={this.props.isEditMode ? (e) => this.editOneStyle(e) : (e)=>this.submitStyle(e)}>Submit</button>
                 </form>
-            </div>
-
-
-
-
-            
+            </div> 
         )
     }        
 }

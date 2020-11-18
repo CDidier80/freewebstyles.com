@@ -1,4 +1,4 @@
-  import ApiClient from './ApiClient'
+import ApiClient from './ApiClient'
 
 export const PostStyleService = async (formData) => {
   try {
@@ -9,11 +9,10 @@ export const PostStyleService = async (formData) => {
   }
 }
 
-
 export const GetOneStyleService = async (styleSearchQuery) => {
   try {
     const res = await ApiClient.get(`/StyleRouterJs/StyleControllerJs/getonestyle/${styleSearchQuery}`)
-    console.log("Response receieved from backend in StyleService.js GetOneStyleService: ", res)
+    // console.log("Response receieved from backend in StyleService.js GetOneStyleService: ", res)
     return res.data
   } catch (error) {
     throw error
@@ -23,7 +22,7 @@ export const GetOneStyleService = async (styleSearchQuery) => {
 export const GetManyRecentStylesService = async (numToGet) => {
   try {
     const res = await ApiClient.get(`/StyleRouterJs/StyleControllerJs/getManyRecentStyles/${numToGet}`)
-    console.log("Response receieved from backend in StyleService.js GetOneStyleService: ", res)
+    // console.log("Response receieved from backend in StyleService.js GetOneStyleService: ", res)
     return res.data
   } catch (error) {
     throw error
@@ -33,7 +32,7 @@ export const GetManyRecentStylesService = async (numToGet) => {
 export const GetManyUsersRecentStylesService = async (currentUser, numToGet) => {
   try {
     const res = await ApiClient.get(`/StyleRouterJs/StyleControllerJs/getusersrecentstyles/${currentUser}/${numToGet}`)
-    console.log("Response receieved from backend in StyleService.js GetManyUsersRecentStylesService: ", res)
+    // console.log("Response receieved from backend in StyleService.js GetManyUsersRecentStylesService: ", res)
     return res.data
   } catch (error) {
     throw error
@@ -43,43 +42,30 @@ export const GetManyUsersRecentStylesService = async (currentUser, numToGet) => 
 export const GetManyUsersLikedStylesService = async (currentUser, numToGet) => {
   try {
     const res = await ApiClient.get(`/StyleRouterJs/StyleControllerJs/getmanylikedstyles/${currentUser}/${numToGet}}`)
-    console.log("Response receieved from backend in StyleService.js GetManyUsersLikedStylesService: ", res)
+    // console.log("Response receieved from backend in StyleService.js GetManyUsersLikedStylesService: ", res)
     return res.data
   } catch (error) {
     throw error
   }
 }
 
+export const DeleteOneStyleService = async (style_name) => {
+  // console.log("DeleteOneStyleService() reached in StyleService.js")
+  // console.log("Value of style_name at DeleteOneStyleService(): ", style_name)
+  try {
+    const res = await ApiClient.delete(`/StyleRouterJs/StyleControllerJs/deleteonestyle/${style_name}`)
+    return res
+  } catch (error) {
+    throw error
+  }
+}
 
-
-
-// I THINK THIS IS A GET MANY
-// export const GetOnePostService = async (page, limit) => {
-//   try {
-//     const res = await ApiClient.get(
-//       `/posts?page=${page || 1}&limit=${limit || 10}`
-//     )
-//     return res.data
-//   } catch (error) {
-//     throw error
-//   }
-// }
-
-// export const __UpdatePost = async (formData, postId) => {
-//   try {
-//     const res = await ApiClient.put(`/posts/${postId}?active=true`, formData)
-//     console.log(res.data)
-//     return res.data
-//   } catch (error) {
-//     throw error
-//   }
-// }
-
-// export const __DeletePost = async (postId) => {
-//   try {
-//     const res = await ApiClient.delete(`/posts/${postId}?active=true`)
-//     return res
-//   } catch (error) {
-//     throw error
-//   }
-// }
+export const EditOneStyleService = async (reqBody, originalStyleName) => {
+  try {
+    const res = await ApiClient.put(`/StyleRouterJs/StyleControllerJs/editonestyle/${originalStyleName}?active=true`, reqBody)
+    // console.log(res.data)
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}

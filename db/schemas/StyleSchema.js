@@ -2,15 +2,12 @@ const { Schema } = require('mongoose')
 
 module.exports = new Schema(
   {      
-    html: {type: String, required: true, index: true},  // user html
-    css: {type: String, default: 0, required: true},    // user css
+    html: {type: String, required: true, index: true},  
+    css: {type: String, default: 0, required: true},   
     creator: {type: Schema.Types.ObjectId, ref: 'users', required: true},
-    // creator: {type: String, required: true},   // a string version just for testing the posting of styles without needing a reference
-    style_name: {type: String,required: true, index: true},  // style names should not be duplicated
+    style_name: {type: String,required: true, index: true},  
     up_votes: {type: Number,default: 0,},
     tags: [{type: String, required: true}],
-
-    // for seeding content to db from 3rd party sources without accounts
     sourceWebsite: {type: String},
     sourceName: {type: String}
   },

@@ -5,9 +5,7 @@ import LogInForm from "../components/landing-components/LogInForm.js"
 import { CreateUserService, LoginUserService } from '../services/UserService'
 
 
-
 class LandingPage extends Component {
-  // console.log(children)
   constructor(props){
     super(props)
     this.state = {
@@ -17,7 +15,6 @@ class LandingPage extends Component {
         authenticated: props.authenticated,
         currentUser: props.currentUser,
         //
-
         eventTarget: "",
         username: "",
         email: "",
@@ -35,11 +32,14 @@ class LandingPage extends Component {
     this.props.history.push('/main')
   }
 
-  submitSignUp = (e) => {
-    // e.preventDefault()
-    const formData = {username: this.state.username, email: this.state.email, password: this.state.password}
-    // console.log(formData)
-    CreateUserService(formData)
+  submitSignUp = async (e) => {
+    try {
+      const formData = {username: this.state.username, email: this.state.email, password: this.state.password}
+      await CreateUserService(formData)
+      this.props.history.push("/main")
+    } catch (error) {
+      console.log("Error thrown in submitSignUp() function defined in LandingPage.js and fired in LogInForm.js child componenet: ", error)
+    }
   }
 
   submitLogIn = async (e) => {
@@ -72,26 +72,25 @@ class LandingPage extends Component {
 
   render() {
     const {eventTarget, currentUser, authenticated} = this.state
-    console.log("The state of LandingPage at render: ", this.state)
-    console.log("this.props of LandingPage at rendering: ", this.props)
-    console.log("Current User: ", currentUser)
-    console.log("Authenticated: ", authenticated)
-    console.log('/////////////////////////////////////////////////////////////////')
+    // console.log("The state of LandingPage at render: ", this.state)
+    // console.log("this.props of LandingPage at rendering: ", this.props)
+    // console.log("Current User: ", currentUser)
+    // console.log("Authenticated: ", authenticated)
+    // console.log('/////////////////////////////////////////////////////////////////')
     return (
       <div className="landingPage">
         <TriangleSvg />
         {eventTarget === "loginLink" ? <LogInForm styleChoice={"landingStyles"} className="LogInPanel" panelState={eventTarget} formSubmit={this.submitLogIn} updateField={this.updateField}/> : null}
         {eventTarget === "signupLink" ? <LogInForm styleChoice={"landingStyles"} className="LogInPanel" panelState={eventTarget} formSubmit={this.submitSignUp} updateField={this.updateField}/> : null}
-
         <div className="landingPageGreeting landingPageLeft">
           <div className="webstylesWrapper">          
             <h1 className="freeWord bothWords ">FREE</h1>
             <h1 className="webstylesWord bothWords ">WEB STYLES</h1>
           </div>
           <div className='actionContainer'>
-             <p className='loginLink' onClick={(e)=>this.activateForm(e)}>Sign In</p>
-             <p className='signupLink' onClick={(e)=>this.activateForm(e)}>Sign Up</p>
-             <button className="getStartedButton" onClick={()=>this.goToMainPage()}>GET STARTED</button>
+            <p className='loginLink' onClick={(e)=>this.activateForm(e)}>Sign In</p>
+            <p className='signupLink' onClick={(e)=>this.activateForm(e)}>Sign Up</p>
+            <button className="getStartedButton" onClick={()=>this.goToMainPage()}>GET STARTED</button>
           </div>
         </div>
       </div>

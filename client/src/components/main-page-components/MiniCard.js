@@ -1,28 +1,19 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ZoomInIcon from '@material-ui/icons/ZoomIn';
+import { Icon } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+    "position": "relative",
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -31,39 +22,60 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.shortest,
     }),
   },
-  expandOpen: {
-    transform: 'rotate(180deg)',
+  subframe : {
+    width: "90%",
+    border: "0px",
+    "border-radius": ".5rem",
+    "box-shadow": "0 0 13px black",
+
   },
   avatar: {
-    backgroundColor: red[500],
+    background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
+    "font-size": "1rem",
   },
+
+  expandIcon: {
+    background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
+    color: "white",
+    "box-shadow": "0 0 2px black"
+  }
 }));
 
-export default function RecipeReviewCard(props) {
+const MiniCard = (props) => {
+  const {css, html, style_name} =  props.styleToDisplay
+  const viewInMainIframe = props.updateCode
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
+  // commented out code to be implemented soon
   return (
     <Card className={classes.root}>
       <CardHeader
-        avatar={<Avatar aria-label="recipe" className={classes.avatar}> R </Avatar>}
-        action={ props.isUsersOwnStyle ? <IconButton aria-label="settings"> <MoreVertIcon /> </IconButton> : null}
-
-        title="Style Name"
-        subheader="September 14, 2016"
+        // avatar={<Avatar aria-label="recipe" className={classes.avatar}> FWS </Avatar>}
+        // <IconButton />
+        action={<IconButton aria-label="settings" className={classes.expandIcon} onClick={()=>viewInMainIframe(html, css)}> <ZoomInIcon /> </IconButton>}
+        title={style_name}
+        // subheader={`by ${creator}`}
         />
-
-    <iframe title="sub" className="subframe" srcDoc={props.htmlStart + props.userCSS + props.cssEnd + props.userHTML + props.htmlEnd}></iframe>
-
+      <iframe title="sub" className={classes.subframe} srcDoc={props.htmlStart + css + props.cssEnd + html + props.htmlEnd}></iframe>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
+        {props.isUsersOwnStyle ?  
+          <IconButton aria-label="edit style">
+            <EditIcon onClick={(e)=> props.toggleABoolean(e, "makeSubmitPanelVisible", style_name)} />
+          </IconButton> 
+          : null
+        }
+        {props.isUsersOwnStyle ?  
+          <IconButton aria-label="delete style">
+            <DeleteIcon onClick={()=>props.deleteOneStyle(style_name)} />
+          </IconButton>
+          : null
+        }
       </CardActions>
     </Card>
   );
 }
+
+export default MiniCard

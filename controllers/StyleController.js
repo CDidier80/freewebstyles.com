@@ -1,6 +1,4 @@
-
 const { StyleModel, UserModel } = require('../db/Models')
-
 
 // POST controller method
 const PostStyle = async (req, res) => {
@@ -20,57 +18,55 @@ const PostStyle = async (req, res) => {
     await res.send({style})
 }
 
-
-
 // GET controller methods
 const GetOneStyle = async (req, res) => {
-  console.log("GetOneStyle() function reached in StyleController.js")
+  // console.log("GetOneStyle() function reached in StyleController.js")
   const style_name = req.params.style_name
-  console.log("style_name value assigned by req.params.style_name: ", style_name)
+  // console.log("style_name value assigned by req.params.style_name: ", style_name)
   const style = await StyleModel.findOne({style_name: style_name})
-  // const style = await StyleModel.findById(req.body.style_id)
   res.send({ style })
 }
 
-
 const GetManyRecentStyles = async (req, res) => {
-  console.log("GetManyRecentStyles() function reached in StyleController.js")
+  // console.log("GetManyRecentStyles() function reached in StyleController.js")
   const numToGet = parseInt(req.params.numToGet)
-  console.log("numToGet value assigned by req.params.numToGet: ", numToGet)
+  // console.log("numToGet value assigned by req.params.numToGet: ", numToGet)
   const styles = await StyleModel.find().sort({ _id: -1 }).limit(numToGet)
-  console.log("Styles grouped for response by GetManyRecentStyles(): ", styles)
+  // console.log("Styles grouped for response by GetManyRecentStyles(): ", styles)
   res.send(styles)
 }
 
-
 // https://stackoverflow.com/questions/33627238/mongoose-find-with-multiple-conditions
 const GetUsersRecentStyles = async (req, res) => {
-  console.log("GetManyRecentStyles() function reached in StyleController.js")
+  // console.log("GetManyRecentStyles() function reached in StyleController.js")
   const numToGet = parseInt(req.params.numToGet)
   const username =  req.params.currentUser
   const creator = await UserModel.findOne({username: username})
-  console.log("numToGet and currentUser values assigned by req.params: ", numToGet, currentUser)
+  // console.log("numToGet and currentUser values assigned by req.params: ", numToGet, username)
   const styles = await StyleModel.find({creator: creator._id}).sort({ _id: -1 }).limit(numToGet)
-  console.log("Styles grouped for response by GetManyRecentStyles(): ", styles)
+  // console.log("Styles grouped for response by GetManyRecentStyles(): ", styles)
   res.send(styles)
 }
 
 
 const GetManyLikedStyles = async (req, res) => { 
-  console.log("GetManyRecentStyles() function reached in StyleController.js")
+  // console.log("GetManyRecentStyles() function reached in StyleController.js")
   const numToGet = parseInt(req.params.numToGet)
   const username =  req.params.currentUser
   const currentUser = await UserModel.findOne({username: username})
   console.log("numToGet and currentUser values assigned by req.params: ", numToGet, currentUser)
   const styles = await StyleModel.find( {style_name: { $in : currentUser.liked_styles}}).sort({ _id: -1 }).limit(numToGet)
-  console.log("Styles grouped for response by GetManyLikedStyles(): ", styles)
+  // console.log("Styles grouped for response by GetManyLikedStyles(): ", styles)
   res.send(styles)
 }
 
 
 // DELETE controller method
 const DeleteOneStyle = async (req, res) => {
-    const styleToDelete = await StyleModel.findOne({style_name: req.body.style_name})
+    // console.log("DeleteOneStyle() controller reached in StyleController.js")
+    // console.log("Value of req.params.style_name in DeleteOneStyle():", req.params.style_name)
+    const styleToDelete = await StyleModel.findOne({style_name: req.params.style_name})
+    // console.log("Style to delete in StyleController.js: ", styleToDelete)
     await StyleModel.deleteOne(styleToDelete)
     res.send({ msg: 'Style deleted' })
   }
@@ -78,17 +74,18 @@ const DeleteOneStyle = async (req, res) => {
 
 const EditOneStyle = async (req, res) => {
   console.log("EditOneStyle controller function reached")
-  console.log("Req.params.style_id: ", req.params.style_id)
-  await StyleModel.findByIdAndUpdate(req.params.style_id,
-    // the interpolated object below will be the updated document
-    // It's intended to contain the updated version of the style sent by the client
+  console.log("value of Req.params.original_style_name in EditOneStyle() controller: ", req.params.original_style_name)
+  console.log("Request body value received at EditOneStyle() controller: ", req.body)
+  const styleNameToEdit = req.params.original_style_name
+  const {tags, style_name} = req.body
+  const style = await StyleModel.updateOne({
+    style_name: styleNameToEdit},
     {
       ...req.body
     },
     { new: true, useFindAndModify: false }
-    // (err, (d) => (err ? err : res.send(d)))     it was giving an err not defined error
   )
-  res.send("Updated.")
+  res.send(style)
 
 }
 
@@ -105,81 +102,7 @@ module.exports = {
 
 
 
-// const DeleteStyle = async (req, res) => {
-//     const styleName = StyleModel.findOne({style_name: req.body.style_name})
-//     await StyleModel.deleteOne(styleName)
-//     res.send({ msg: 'Style deleted' })
-//   }
-  
 
 
 
 
-
-
-
-
-
-
-//   const { response } = require('express')
-// const { User } = require('../db/schema')
-
-// const GetPost = async (req, res) => {
-//   const { page, limit } = req.query
-//   const offset = page === '1' ? 0 : Math.floor(parseInt(page) * parseInt(limit))
-//   const posts = await TravelLog.find()
-//     .limit(parseInt(limit))
-//     .skip(offset)
-//     .sort({ popularity_rating: 'desc' })
-//   res.send({ results: posts.length, posts })
-// }
-
-// const GetPostById = async (req, res) => {
-//   const post = await TravelLog.findById(req.params.post_id).populate([
-//     {
-//       model: 'users',
-//       path: 'user_id',
-//       select: '_id name'
-//     },
-//     {
-//       path: 'comments',
-//       populate: {
-//         path: 'user_id',
-//         model: 'users',
-//         select: '_id name'
-//       }
-//     }
-//   ])
-//   res.send(post)
-// }
-
-// const CreatePost = async (req, res) => {
-//   const newPost = new TravelLog({ ...req.body, user_id: req.params.user_id })
-//   newPost.save()
-//   res.send(newPost)
-// }
-
-// const DeletePost = async (req, res) => {
-//   await Comment.deleteMany({ _id: { $in: post.comments } })
-//   await TravelLog.findByIdAndDelete(req.params.post_id)
-//   res.send({ msg: 'Post deleted' })
-// }
-
-// const UpdatePost = async (req, res) => {
-//   await TravelLog.findByIdAndUpdate(
-//     req.params.post_id,
-//     {
-//       ...req.body
-//     },
-//     { new: true, useFindAndModify: false },
-//     (err, (d) => (err ? err : res.send(d)))
-//   )
-// }
-
-// module.exports = {
-
-//   GetPostById,
-//   CreatePost,
-//   DeletePost,
-//   UpdatePost
-// }
