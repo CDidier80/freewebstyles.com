@@ -1,11 +1,9 @@
-
 // DO NOT PUT SENSITIVE INFORMATION IN JWT. TOKENS CAN BE DECIPHERED EASILY ONLINE
-
 const jwt = require('jsonwebtoken')
 require('dotenv').config()   // indicates use of .env
 
 // the secret key and number of salt rounds are stored privately in .env
-const secretKey = process.env.SECRET_KEY
+const secretKey = process.env.APP_SECRET
 
 const createToken = (req,res) =>{
     console.log('createToken() fired in jwthandler.js. This is last function to run before response sent to client')

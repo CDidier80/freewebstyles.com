@@ -18,14 +18,15 @@ class LandingPage extends Component {
         eventTarget: "",
         username: "",
         email: "",
-        password: ""
+        password: "",
+        isLeftward: false
     }
   }
 
   activateForm = (e) => {
     e.preventDefault() 
     console.log('clicked')
-      this.setState({eventTarget: e.target.className})
+      this.setState({eventTarget: e.target.className, isLeftward: true})
     }
 
   goToMainPage = () => {
@@ -71,7 +72,7 @@ class LandingPage extends Component {
   }
 
   render() {
-    const {eventTarget, currentUser, authenticated} = this.state
+    const {eventTarget, isLeftward, currentUser, authenticated} = this.state
     // console.log("The state of LandingPage at render: ", this.state)
     // console.log("this.props of LandingPage at rendering: ", this.props)
     // console.log("Current User: ", currentUser)
@@ -82,7 +83,7 @@ class LandingPage extends Component {
         <TriangleSvg />
         {eventTarget === "loginLink" ? <LogInForm styleChoice={"landingStyles"} className="LogInPanel" panelState={eventTarget} formSubmit={this.submitLogIn} updateField={this.updateField}/> : null}
         {eventTarget === "signupLink" ? <LogInForm styleChoice={"landingStyles"} className="LogInPanel" panelState={eventTarget} formSubmit={this.submitSignUp} updateField={this.updateField}/> : null}
-        <div className="landingPageGreeting landingPageLeft">
+        <div className={isLeftward ? "landingPageGreeting landingPageLeft" : "landingPageGreeting"}>
           <div className="webstylesWrapper">          
             <h1 className="freeWord bothWords ">FREE</h1>
             <h1 className="webstylesWord bothWords ">WEB STYLES</h1>

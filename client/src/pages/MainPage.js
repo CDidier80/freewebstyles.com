@@ -47,7 +47,9 @@ class MainPage extends Component {
             const recentStyles = await GetManyRecentStylesService(authenticated ? 6 : 9)
             const usersRecentStyles = authenticated ? await GetManyUsersRecentStylesService(currentUser, 6) : []
             const usersLiked = await authenticated ? GetManyUsersLikedStylesService(currentUser, 6) : []
-            this.setState({recentlyAddedStyles: recentStyles, usersRecentStyles: usersRecentStyles, usersLikedStyles: usersLiked})
+            const mostRecentStyle = recentStyles[0]
+            this.setState({recentlyAddedStyles: recentStyles, usersRecentStyles: usersRecentStyles, usersLikedStyles: usersLiked, userHTML: mostRecentStyle.html, userCSS: mostRecentStyle.css })
+
         } catch (error) {
             console.log("Error raised in componentDidMount of MainPage.js:")
             console.log(error)
@@ -148,7 +150,8 @@ class MainPage extends Component {
                 </div>
                 <div className="display">
                     <div className="heroWrapper">
-                        <iframe title="mainIframe" style={{backgroundColor: "#FFFFFF"}} className="iframeWindow" srcDoc={htmlStart + userCSS + cssEnd + userHTML + htmlEnd} sandbox={"allow-downloads allow-same-origin allow-modals allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation"}></iframe>
+                        <iframe title="mainIframe" style={{backgroundColor: "#FFFFFF"}} className="iframeWindow" srcDoc={htmlStart + userCSS + cssEnd + userHTML + htmlEnd} 
+                        sandbox={"allow-downloads allow-same-origin allow-modals allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation"}></iframe>
                         <div className="iframeButtonPanel">
                             <button className="toggleCodeButton" onClick={() => this.toggleCode()}>Toggle Code</button>
                             <button className="clearCode" onClick={() => this.clearCode()}>Clear Code</button>
@@ -180,5 +183,5 @@ class MainPage extends Component {
 }
 
 
-  export default MainPage
+export default MainPage
 
