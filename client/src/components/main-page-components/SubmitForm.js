@@ -3,7 +3,7 @@ import { EditOneStyleService, PostStyleService } from '../../services/StyleServi
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import tagOptions from '../../data-exports/allTagOptions'
+import tagOptions from '../../js-exports/allTagOptions'
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import '../../styles/SubmitForm.css'
