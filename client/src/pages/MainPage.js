@@ -5,8 +5,10 @@ import { GetOneStyleService, GetManyRecentStylesService, GetManyUsersRecentStyle
 import Ace from "../components/main-page-components/editors/Ace.js"
 import MiniCard from "../components/main-page-components/MiniCard.js"
 import SubmitForm from "../components/main-page-components/SubmitForm.js"
+import Avatar from '@material-ui/core/Avatar';
 import CreateAccountPrompt from "../components/main-page-components/CreateAccountPrompt.js"
 import TriangleSvg from '../components/landing-components/TriangleSvg'
+import { consoleLogTests } from '../js-exports/logTests'
 const { htmlBoilerplateStart } = require('../components/main-page-components/editors/htmlBoilerplate.js')
 
 
@@ -14,6 +16,7 @@ class MainPage extends Component {
     constructor(props){
         super(props)
         this.state = {
+            fileName: "MainPage.js",
         //  props from App.js 
             toggleAuthenticated: props.toggleAuthenticated,
             verifyTokenValid: props.verifyTokenValid,
@@ -26,8 +29,7 @@ class MainPage extends Component {
             cssEnd: `</style></head>`,
             userHTML: ``,
             htmlEnd: `</html>`,
-            codeIsDisplayed: true,
-            editorHeight: [{maxHeight: "300px"}, {maxHeight: "0px"}],
+            codeIsDisplayed: false,
             isSubmitPanelVisible: false, 
             isCreateAccountPromptVisible: false,
             usersLikedStyles: [],
@@ -131,9 +133,9 @@ class MainPage extends Component {
     }
 
     render() {
-        const {htmlStart, userCSS, cssEnd, userHTML, htmlEnd, codeIsDisplayed, editorHeight, isSubmitPanelVisible, 
-            isCreateAccountPromptVisible, currentUser, authenticated, goToSignupPage, recentlyAddedStyles, usersRecentStyles} = this.state
-        console.log('/////////////////////////////////////////////////////////////////')
+        const {fileName, htmlStart, userCSS, cssEnd, userHTML, htmlEnd, codeIsDisplayed, editorHeight, isSubmitPanelVisible, 
+            isCreateAccountPromptVisible, currentUser, authenticated, goToSignupPage, recentlyAddedStyles, usersRecentStyles} = this.state, {state, props} = this
+        consoleLogTests("class", fileName, props, state, [] )
 
         // commented out code will be implemented soon
         return (
@@ -146,7 +148,12 @@ class MainPage extends Component {
                     </div>
                     {/* <TextField className="styleSearchField" label="Search for Styles..."  onChange={(e)=>this.updateSearchField(e)}>{styleSearchField}</TextField>
                     <button className="submitStyleSearchButton" onClick={()=>this.submitStyleSearch()}>search</button> */}
-                    <NavLink className="loginNavlink" to="/login">Sign In</NavLink>
+                    <div className="loginSignupWrapper">
+                        <NavLink className="signupNavlink" to={{pathname: "/login", state: {loginPageDefault: false}}}>Sign Up</NavLink>
+                        <NavLink className="signinNavlink" to={{pathname: "/login", state: {loginPageDefault: "signInLink"}}}>Sign In</NavLink>
+                        {authenticated ? <Avatar /> : null}
+                    </div>
+
                 </div>
                 <div className="display">
                     <div className="heroWrapper">
@@ -161,13 +168,14 @@ class MainPage extends Component {
                             <h3 className="languageHeader htmlHeader">HTML</h3>
                             <h3 className="languageHeader cssHeader">CSS</h3>
                         </div>
-                        <div className="editorWrapper" style={codeIsDisplayed ? editorHeight[0] : editorHeight[1]}>
+                        <div className="editorWrapper">
                             <Ace {...this.state} className="editor" val={userHTML} mode={'html'} updateFunction={this.updateHTML} theme={'github'} name={'htmlEditor'}/>
                             <Ace {...this.state} className="editor" val={userCSS} updateFunction={this.updateCSS} mode={'css'} theme={'github'} name={'cssEditor'}/>
                         </div>
+                        <h1>hello</h1>
                     </div>
                     {isSubmitPanelVisible ? <SubmitForm {...this.state} toggleABoolean={this.toggleABoolean} currentUser={currentUser} userCSS={userCSS} userHTML={userHTML}/> : null}
-                    {isCreateAccountPromptVisible ? <CreateAccountPrompt toggleABoolean={this.toggleABoolean} goToSignupPage={goToSignupPage}/> : null}
+                    {isCreateAccountPromptVisible ? <CreateAccountPrompt toggleABoolean={this.toggleABoolean}/> : null}
                 <div className="styleGrid">
                     <h1 className="recentlyAddedHeader">Recently Added</h1>
                     {recentlyAddedStyles.map((style, index) => <MiniCard key={`${index}1`} {...this.state} deleteOneStyle={this.deleteOneStyle}  toggleABoolean={this.toggleABoolean} updateCode={this.updateCode} className="recentlyAddedCards" styleToDisplay={style} isUsersOwnStyle={false}/>)}
