@@ -3,6 +3,8 @@ import { Switch, Route, withRouter } from 'react-router-dom'
 import MainPage from './pages/MainPage'
 import LandingPage from './pages/LandingPage'
 import SignupPage from './pages/SignupPage'
+import UserProfilePage from './pages/UserProfilePage'
+import consoleLogTests from './js-exports/logTests.js'
 // import ProtectedRoute from './components/ProtectedRoute'
 import "./styles/App.css"
 import { CheckSessionService } from './services/UserService'
@@ -12,10 +14,11 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      fileName: "App.js",
+      consoleLogTests: consoleLogTests,
       authenticated: false,
       currentUser: null, 
       pageLoading: true,
-      loginPageDefault: "",
     }
   }
 
@@ -55,7 +58,6 @@ class App extends Component {
 }
 
   render() {
-    const {authenticated, currentUser, loginPageDefault} = this.state
     return (
       <main className="App">
         {this.state.pageLoading ? (
@@ -64,9 +66,10 @@ class App extends Component {
           </div>
         ) : (
           <Switch>
-            <Route exact path="/" component={(props) => <LandingPage {...props} verifyTokenValid={this.verifyTokenValid}  authenticated={authenticated} currentUser={currentUser} toggleAuthenticated={this.toggleAuthenticated}/>}/>
-            <Route exact path="/main" component={(props) => <MainPage {...props} goToSignupPage={this.goToSignupPage} authenticated={authenticated} verifyTokenValid={this.verifyTokenValid} authenticated={authenticated} currentUser={currentUser} toggleAuthenticated={this.toggleAuthenticated}/>}/>
-            <Route exact path="/login" component={(props) => <SignupPage {...props} loginPageDefault={loginPageDefault} authenticated={authenticated} verifyTokenValid={this.verifyTokenValid} authenticated={authenticated} currentUser={currentUser} toggleAuthenticated={this.toggleAuthenticated}/>}/>
+            <Route exact path="/" component={(props) => <LandingPage {...props} verifyTokenValid={this.verifyTokenValid}  toggleAuthenticated={this.toggleAuthenticated}/>}/>
+            <Route path="/main" component={(props) => <MainPage {...props} goToSignupPage={this.goToSignupPage} verifyTokenValid={this.verifyTokenValid} toggleAuthenticated={this.toggleAuthenticated}/>}/>
+            <Route path="/login" component={(props) => <SignupPage {...props}  verifyTokenValid={this.verifyTokenValid} toggleAuthenticated={this.toggleAuthenticated}/>}/>
+            <Route path="/profile" component={(props) => <UserProfilePage {...props} verifyTokenValid={this.verifyTokenValid}  toggleAuthenticated={this.toggleAuthenticated}/>}/>
           </Switch>
         )}
       </main>
@@ -75,3 +78,8 @@ class App extends Component {
 }
 
 export default withRouter(App)
+
+
+
+
+
