@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import {NavLink} from "react-router-dom"
+import { consoleLogTests } from '../../js-exports/logTests'
 import '../../styles/CreateAccountPrompt.css'
 
 
@@ -8,18 +10,15 @@ export default class SubmitForm extends Component {
         super(props)
         // console.log(this.props.userCSS)
         this.state = {
+            fileName: "CreateAccountPrompt.js",
             toggleABoolean: props.toggleABoolean,
-            goToSignupPage: props.goToSignupPage
         }
     }
     
 
     render() {
-        // removed from MenuItems: style={getStyles(name, personName, theme)}
-        // removed from Select: input={<Input />}  onChange={handleChange} 
-        // MUST PUT IN A HANDLE CHANGE FOR SELECT
-        // select documentation: https://material-ui.com/components/selects/#select
-        
+        const {fileName} = this.state, {props, state} = this
+        consoleLogTests("class", fileName, props, state, [] )
         const {toggleABoolean, goToSignupPage} = this.state
         console.log("this.state.goToSignupPage logged at CreateAccountPrompt.js render: ", this.state.goToSignupPage)
         return (
@@ -27,8 +26,8 @@ export default class SubmitForm extends Component {
                 <div className="prompt">
                     <p className="pTagPrompt">Sign in to share your style</p>
                     <div className="linkContainer">
-                        <p className="signInLink" onClick={(e)=>goToSignupPage(e)}>Sign In</p>
-                        <p className="signUpLink" onClick={(e)=>goToSignupPage(e)}>Create Account</p>
+                        <NavLink className="signupNavlink" to={{pathname: "/login", state: {loginPageDefault: false}}}>Sign Up</NavLink>
+                        <NavLink className="signinNavlink" to={{pathname: "/login", state: {loginPageDefault: "signInLink"}}}>Sign In</NavLink>
                     </div>
                 </div>
             </div>
