@@ -20,7 +20,6 @@
     z-index: 200;
     left: 50%;
     transform: translate(-50%, 0);
-
 }
 
 .formTitle {
@@ -28,6 +27,7 @@
     font-family: 'Poiret One';
     font-weight: bold;
 }
+
 .threeTagsText {
     font-size: 18px;
     margin-bottom: 0;

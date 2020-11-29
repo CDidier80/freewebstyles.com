@@ -3,7 +3,8 @@
     padding: 0 0;
     min-height: 100vh;
     min-width: 100vw;
-    background-color: rgba(0, 0, 0, 0.65);
+    min-width: 600px;
+    background-color: rgba(0, 0, 0, 0.50);
     position: relative;
 }
 
@@ -59,24 +60,41 @@
     padding-top: 0;
 }
 
-.loginNavlink {
+.loginSignupWrapper {
+    display: flex;
+    justify-content: space-between;
+    font-family: "Poiret One";
+    font-weight: bold;
+}
+
+.signupNavlink {
+    display: block;
+    align-self: center;
+    margin-right: 0;
+    font-size: 20px;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.signinNavlink {
     display: block;
     align-self: center;
     margin-right: 5vw;
     font-size: 20px;
+    text-decoration: none;
+}
+
+.display {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 50px;
+    z-index: 100;
 }
 
 .heroWrapper {
     background-color: white;
-    padding: 1rem 1rem 1rem 1rem;
+    padding: 1rem;
     border-radius: 1rem;
-}
-
-.display {
-    width: 1000px;
-    margin: 0 auto;
-    padding-top: 50px;
-    z-index: 100;
 }
 
 .iframeWindow {
@@ -121,13 +139,17 @@
 
 .editorWrapper {
     width: 100%;
-    max-height: 310px;
     display: flex;
-    overflow: auto;
-    justify-content: center;
+    justify-content: left;
     box-shadow: 0 0 10px black;
     border-radius: 5px;
 }
+
+.editorWrapper::-webkit-scrollbar {
+    width: 0px; 
+    background: transparent; 
+    }
+
 
 .languageHeaderWrapper {
     width: 100%;
@@ -172,22 +194,3 @@
     border-bottom: 1px white solid;
 }
 
-/* .recentlyAddedCards {
-
-} */
-
-@-webkit-keyframes AnimationName {
-0%{background-position:0% 2%}
-    50%{background-position:100% 99%}
-    100%{background-position:0% 2%}
-}
-@-moz-keyframes AnimationName {
-    0%{background-position:0% 2%}
-    50%{background-position:100% 99%}
-    100%{background-position:0% 2%}
-}
-@keyframes AnimationName {
-    0%{background-position:0% 2%}
-    50%{background-position:100% 99%}
-    100%{background-position:0% 2%}
-}
