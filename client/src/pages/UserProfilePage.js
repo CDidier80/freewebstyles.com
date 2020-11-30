@@ -70,18 +70,112 @@ export default class UserProfile extends Component {
 //         console.log('updateField() switch statement originating in LandingPage.js had no matching cases.')
 //     }
 //   }
+import React from 'react';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+
+const useRowStyles = makeStyles({
+  root: {
+    '& > *': {
+      borderBottom: 'unset',
+    },
+  },
+});
+
+
+function Row(props) {
+  const { row } = props;
+  const [open, setOpen] = React.useState(false);
+  const classes = useRowStyles();
+
+  return (
+    <React.Fragment>
+
+      <TableRow className={classes.root}>
+        <TableCell component="th" scope="row">{row[0]}</TableCell>
+        <TableCell align="center">{row[1]}</TableCell>
+        <TableCell>
+          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+            {open ? <KeyboardArrowUpIcon  /> : <EditIcon />}
+          </IconButton>
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box margin={1}>
+              <Table size="small" aria-label="purchases"></Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+
+    </React.Fragment>
+  );
+}
+
+// Row.propTypes = {
+//   row: PropTypes.shape({
+//     calories: PropTypes.number.isRequired,
+//     protein: PropTypes.number.isRequired,
+//   }).isRequired,
+// };
+
+
+
+export default function CollapsibleTable() {
+  const [open, setOpen] = React.useState(false);
+  const rows = [
+    ['Username', "example801"],
+    ['Email Address', "sample@gmail.com"],
+    ['Password', "*******"]
+  ]
+  return (
+    <TableContainer component={Paper}>
+      <Table aria-label="collapsible table">
+        <TableBody>
+          {rows.map((row, index) => (
+            <Row key={`${row}${index}`} row={row} />
+          ))}
+          <TableRow>
+            <TableCell component="th" scope="row">Delete Account</TableCell>
+            <TableCell>
+              <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                {open ? <KeyboardArrowUpIcon  /> : <EditIcon />}
+              </IconButton>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
 
   render() {
-    // const {loginPageDefault, currentUser, authenticated} = this.state
-    // console.log("The state of UserProfile at render: ", this.state)
-    // console.log("this.props of UserProfile at rendering: ", this.props)
-    // console.log("Current User: ", currentUser)
-    // console.log("Authenticated: ", authenticated)
     console.log('///////////////////////////RENDER USERPROFILE.JS BELOW//////////////////////////////////////')
     return (
         <div className="userProfile">
             <TriangleSvg />
             <Avatar />
+            <div className="accountSquare">
+    
+            </div>
+            <div className="styleSquare">
+              <p>In Development</p>
+            </div>
         </div>
     )
   }
