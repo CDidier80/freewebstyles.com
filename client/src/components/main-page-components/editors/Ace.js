@@ -65,7 +65,6 @@ export default class Ace extends Component {
       this.state = {
           mode: this.props.mode,
           theme: "idle_fingers",
-          name: props.name,
       } 
     }
   
@@ -75,9 +74,9 @@ export default class Ace extends Component {
     }
 
     render() {
-      const {mode, theme, name, updateFunction} = this.state, {name, updateFunction, userHTML, userCSS} = this.props, 
+      const {mode, theme} = this.state, {name, updateFunction, userHTML, userCSS} = this.props
       return (
-        <AceEditor style={styles} setOptions={{wrapBehavioursEnabled: true, animatedScroll: true}} mode={mode} theme={theme} onChange={updateFunction} name={name} value={name === "htmlEditor" ? userHTML : userCSS } editorProps={{ $blockScrolling: true}} />
+        <AceEditor style={this.styles} setOptions={{wrapBehavioursEnabled: true, animatedScroll: true}} mode={mode} theme={theme} onChange={updateFunction} name={name} value={name === "htmlEditor" ? userHTML : userCSS } editorProps={{ $blockScrolling: true}} />
       )}
 }
   
