@@ -27,9 +27,9 @@ function Copyright() {
 }
 
 export default function LogInForm(props) {
-console.log(props.isLeftward)
-  const landingStyles = makeStyles((theme) => ({
-    root: {
+
+  const root = props.styleChoice != "formStyles" ? 
+    {
       "background-color": "rgba(255,255,255,.4)",
       height: '100vh',
       maxWidth: `${props.isLeftward ? "35vw" : "0px"}`,
@@ -37,42 +37,17 @@ console.log(props.isLeftward)
       position: "absolute", 
       right: 0,
       transition: "max-width .2s linear"
-    },
-    transparentWhite: {
-      "background-color": "rgba(255,255,255,.4)",
-    },
-    paper: {
-      margin: theme.spacing(8, 4),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      backgroundColor: "rgba(255,255,255,.4)",
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
-      "background-color": "rgba(255,255,255)",
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-      "background-color": "#2196F3",
-      "font-weight": "bold"
-    },
-  }));
-  
-  const signupStyles = makeStyles((theme) => ({
-    root: {
+    } : {
       "background-color": "rgba(255,255,255,.4)",
       height: '100vh',
       width: '45vw',
       position: "absolute", 
       left: "50%",
       transform: "translate(-50%, 0)"
-    },
+    }
+  
+  const formStyles = makeStyles((theme) => ({
+    root,
     transparentWhite: {
       "background-color": "rgba(255,255,255,.4)",
     },
@@ -82,7 +57,6 @@ console.log(props.isLeftward)
       flexDirection: 'column',
       alignItems: 'center',
       backgroundColor: "rgba(255,255,255,.4)",
-      
     },
     avatar: {
       margin: theme.spacing(1),
@@ -97,11 +71,11 @@ console.log(props.isLeftward)
       margin: theme.spacing(3, 0, 2),
       "background-color": "#2196F3",
       "font-weight": "bold"
-  
     },
   }));
-  const styleChoice = props.styleChoice
-  const classes = styleChoice === "landingStyles" ? landingStyles() : signupStyles()
+  
+
+  const classes = formStyles() 
   const {panelState, updateField, formSubmit} = props
   let isSigningUp = panelState === "signupLink" ? true : false
   return (
