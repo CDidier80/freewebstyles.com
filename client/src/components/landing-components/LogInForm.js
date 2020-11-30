@@ -11,7 +11,7 @@ import Grid from '@material-ui/core/Grid';
 // import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles} from '@material-ui/core/styles';
-
+import  "../../styles/LandingPage.css";
 
 function Copyright() {
   return (
@@ -26,79 +26,80 @@ function Copyright() {
   );
 }
 
-const landingStyles = makeStyles((theme) => ({
-  root: {
-    "background-color": "rgba(255,255,255,.4)",
-    height: '100vh',
-    width: '35vw',
-    position: "absolute", 
-    right: 0,
-  },
-  transparentWhite: {
-    "background-color": "rgba(255,255,255,.4)",
-  },
-  paper: {
-    margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: "rgba(255,255,255,.4)",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-    "background-color": "rgba(255,255,255)",
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-    "background-color": "#2196F3",
-    "font-weight": "bold"
-
-  },
-}));
-
-const signupStyles = makeStyles((theme) => ({
-  root: {
-    "background-color": "rgba(255,255,255,.4)",
-    height: '100vh',
-    width: '45vw',
-    position: "absolute", 
-    left: "50%",
-    transform: "translate(-50%, 0)"
-  },
-  transparentWhite: {
-    "background-color": "rgba(255,255,255,.4)",
-  },
-  paper: {
-    margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: "rgba(255,255,255,.4)",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-    "background-color": "rgba(255,255,255)",
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-    "background-color": "#2196F3",
-    "font-weight": "bold"
-
-  },
-}));
-
-
 export default function LogInForm(props) {
+console.log(props.isLeftward)
+  const landingStyles = makeStyles((theme) => ({
+    root: {
+      "background-color": "rgba(255,255,255,.4)",
+      height: '100vh',
+      maxWidth: `${props.isLeftward ? "35vw" : "0px"}`,
+      overflow: "hidden",
+      position: "absolute", 
+      right: 0,
+      transition: "max-width .2s linear"
+    },
+    transparentWhite: {
+      "background-color": "rgba(255,255,255,.4)",
+    },
+    paper: {
+      margin: theme.spacing(8, 4),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      backgroundColor: "rgba(255,255,255,.4)",
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+      "background-color": "rgba(255,255,255)",
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+      "background-color": "#2196F3",
+      "font-weight": "bold"
+    },
+  }));
+  
+  const signupStyles = makeStyles((theme) => ({
+    root: {
+      "background-color": "rgba(255,255,255,.4)",
+      height: '100vh',
+      width: '45vw',
+      position: "absolute", 
+      left: "50%",
+      transform: "translate(-50%, 0)"
+    },
+    transparentWhite: {
+      "background-color": "rgba(255,255,255,.4)",
+    },
+    paper: {
+      margin: theme.spacing(8, 4),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      backgroundColor: "rgba(255,255,255,.4)",
+      
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+      "background-color": "rgba(255,255,255)",
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+      "background-color": "#2196F3",
+      "font-weight": "bold"
+  
+    },
+  }));
   const styleChoice = props.styleChoice
   const classes = styleChoice === "landingStyles" ? landingStyles() : signupStyles()
   const {panelState, updateField, formSubmit} = props
