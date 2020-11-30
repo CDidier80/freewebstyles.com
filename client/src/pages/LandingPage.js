@@ -19,14 +19,17 @@ class LandingPage extends Component {
         username: "",
         email: "",
         password: "",
-        isLeftward: false
+        isLeftward: false, 
+        panelState: false,
+        
     }
   }
 
   activateForm = (e) => {
     e.preventDefault() 
     console.log('clicked')
-      this.setState({eventTarget: e.target.className, isLeftward: true})
+    let panelState = e.target.className === "signupLink" ? "signupLink" : false
+      this.setState({eventTarget: e.target.className, isLeftward: true, panelState})
     }
 
   goToMainPage = () => {
@@ -72,7 +75,7 @@ class LandingPage extends Component {
   }
 
   render() {
-    const {eventTarget, isLeftward, currentUser, authenticated} = this.state
+    const {eventTarget, isLeftward, currentUser, authenticated, panelState} = this.state
     // console.log("The state of LandingPage at render: ", this.state)
     // console.log("this.props of LandingPage at rendering: ", this.props)
     // console.log("Current User: ", currentUser)
@@ -81,8 +84,9 @@ class LandingPage extends Component {
     return (
       <div className="landingPage">
         <TriangleSvg />
-        {eventTarget === "loginLink" ? <LogInForm styleChoice={"landingStyles"} className="LogInPanel" panelState={eventTarget} formSubmit={this.submitLogIn} updateField={this.updateField}/> : null}
-        {eventTarget === "signupLink" ? <LogInForm styleChoice={"landingStyles"} className="LogInPanel" panelState={eventTarget} formSubmit={this.submitSignUp} updateField={this.updateField}/> : null}
+        {/* {eventTarget === "loginLink" ? <LogInForm styleChoice={"landingStyles"} className="LogInPanel" panelState={eventTarget} formSubmit={this.submitLogIn} updateField={this.updateField}/> : null}
+        {eventTarget === "signupLink" ? <LogInForm styleChoice={"landingStyles"} className="LogInPanel" panelState={eventTarget} formSubmit={this.submitSignUp} updateField={this.updateField}/> : null} */}
+        <LogInForm {...this.state} className="LogInPanel" formSubmit={!panelState ? this.submitLogIn : this.submitSignUp} panelState={!panelState ? false : "signupLink"} updateField={this.updateField} styleChoice={"landingStyles"}/>
         <div className={isLeftward ? "landingPageGreeting landingPageLeft" : "landingPageGreeting"}>
           <div className="webstylesWrapper">          
             <h1 className="freeWord bothWords ">FREE</h1>
