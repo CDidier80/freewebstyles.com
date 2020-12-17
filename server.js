@@ -12,6 +12,7 @@ const app = express()
 // Initialize Middleware
 app.use(logger('dev'))
 app.use(helmet())
+// app.use(helmet({ contentSecurityPolicy: false })); --> deployment only, replaces above
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -20,13 +21,16 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.disable('X-Powered-By')    // addresses huge security hole in express, conceals which api you're using. 
 
 
+// app.get('/', (req, res) => res.send({ msg: 'Server Working' }))  --> for dev testing only
 
-
-app.get('/', (req, res) => res.send({ msg: 'Server Working' }))
-// this url is where we tell the AppRouter to operate. Different routers can listen to different urls, 
-// presumeably with different api clients. But, we roll everything into the one api and the one AppRouter with its subrouters
+app.use(express.static(path.join(__dirname, "client", "build")));
 app.use('/APImeetsServerJs', AppRouter)
-// app.get('/APImeetsServerJs/test', (req, res) => res.send({ msg: 'test Working' }))   
+
+// app.get("*", (req, res) =>
+//   res.sendFile(path.join(__dirname, "client", "build", "index.html"))   ----> for deployment only
+// );
+
+
 app.listen(PORT, async () => {
   try {
     await connection
