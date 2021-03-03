@@ -1,52 +1,51 @@
 
-const { StyleModel, UserModel } = require('../db/Models')
 
 
 const PostStyle = async (req, res) => {
-    const body = req.body
-    console.log('PostStyle controller function reached')
-    console.log('req.body: ', req.body)
-    const creator = await UserModel.findOne({username: body.username})
-    const style = new StyleModel({
-        html: body.html,
-        css: body.css,
-        creator: creator._id,
-        style_name: body.style_name,
-        tags: body.tags
-        // upvote key not included--it should always default to 0
-    })
-    await style.save()
-    await res.send({style})
+    // const body = req.body
+    // console.log('PostStyle controller function reached')
+    // console.log('req.body: ', req.body)
+    // const creator = await UserModel.findOne({username: body.username})
+    // const style = new StyleModel({
+    //     html: body.html,
+    //     css: body.css,
+    //     creator: creator._id,
+    //     style_name: body.style_name,
+    //     tags: body.tags
+    //     // upvote key not included--it should always default to 0
+    // })
+    // await style.save()
+    // await res.send({style})
 }
 
 const GetOneStyle = async (req, res) => {
-  console.log("GetOneStyle() function reached in StyleController.js")
-  const style_name = req.params.style_name
-  console.log("style_name value assigned by req.params.style_name: ", style_name)
-  const style = await StyleModel.findOne({style_name: style_name})
-  // const style = await StyleModel.findById(req.body.style_id)
-  res.send({ style })
+  // console.log("GetOneStyle() function reached in StyleController.js")
+  // const style_name = req.params.style_name
+  // console.log("style_name value assigned by req.params.style_name: ", style_name)
+  // const style = await StyleModel.findOne({style_name: style_name})
+  // // const style = await StyleModel.findById(req.body.style_id)
+  // res.send({ style })
 }
 
 const DeleteOneStyle = async (req, res) => {
-    const styleToDelete = await StyleModel.findOne({style_name: req.body.style_name})
-    await StyleModel.deleteOne(styleToDelete)
-    res.send({ msg: 'Style deleted' })
+    // const styleToDelete = await StyleModel.findOne({style_name: req.body.style_name})
+    // await StyleModel.deleteOne(styleToDelete)
+    // res.send({ msg: 'Style deleted' })
   }
 
 const EditOneStyle = async (req, res) => {
-  console.log("EditOneStyle controller function reached")
-  console.log("Req.params.style_id: ", req.params.style_id)
-  await StyleModel.findByIdAndUpdate(req.params.style_id,
-    // the interpolated object below will be the updated document
-    // It's intended to contain the updated version of the style sent by the client
-    {
-      ...req.body
-    },
-    { new: true, useFindAndModify: false }
-    // (err, (d) => (err ? err : res.send(d)))     it was giving an err not defined error
-  )
-  res.send("Updated.")
+  // console.log("EditOneStyle controller function reached")
+  // console.log("Req.params.style_id: ", req.params.style_id)
+  // await StyleModel.findByIdAndUpdate(req.params.style_id,
+  //   // the interpolated object below will be the updated document
+  //   // It's intended to contain the updated version of the style sent by the client
+  //   {
+  //     ...req.body
+  //   },
+  //   { new: true, useFindAndModify: false }
+  //   // (err, (d) => (err ? err : res.send(d)))     it was giving an err not defined error
+  // )
+  // res.send("Updated.")
 
 }
 
