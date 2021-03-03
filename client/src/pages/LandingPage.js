@@ -3,21 +3,17 @@ import '../styles/LandingPage.css'
 import TriangleSvg from "../components/landing-components/TriangleSvg.js"
 import LogInForm from "../components/landing-components/LogInForm.js"
 import { CreateUserService, LoginUserService } from '../services/UserService'
-
-
+import { LandingPageLogs } from "./logs"
 
 class LandingPage extends Component {
   // console.log(children)
   constructor(props){
     super(props)
     this.state = {
-        // props from App.js 
         toggleAuthenticated: props.toggleAuthenticated,
         verifyTokenValid: props.verifyTokenValid,
         authenticated: props.authenticated,
         currentUser: props.currentUser,
-        //
-
         eventTarget: "",
         username: "",
         email: "",
@@ -71,17 +67,31 @@ class LandingPage extends Component {
   }
 
   render() {
-    const {eventTarget, currentUser, authenticated} = this.state
-    console.log("The state of LandingPage at render: ", this.state)
-    console.log("this.props of LandingPage at rendering: ", this.props)
-    console.log("Current User: ", currentUser)
-    console.log("Authenticated: ", authenticated)
-    console.log('/////////////////////////////////////////////////////////////////')
+
+    const { eventTarget, currentUser, authenticated } = this.state
+    LandingPageLogs(this.state, this.props, currentUser, authenticated)
+
     return (
       <div className="landingPage">
         <TriangleSvg />
-        {eventTarget === "loginLink" ? <LogInForm styleChoice={"landingStyles"} className="LogInPanel" panelState={eventTarget} formSubmit={this.submitLogIn} updateField={this.updateField}/> : null}
-        {eventTarget === "signupLink" ? <LogInForm styleChoice={"landingStyles"} className="LogInPanel" panelState={eventTarget} formSubmit={this.submitSignUp} updateField={this.updateField}/> : null}
+        {eventTarget === "loginLink" && (
+          <LogInForm 
+            styleChoice={"landingStyles"} 
+            className="LogInPanel" 
+            panelState={eventTarget} 
+            formSubmit={this.submitLogIn} 
+            updateField={this.updateField}
+          /> 
+        )}
+        {eventTarget === "signupLink" && (
+          <LogInForm 
+            styleChoice={"landingStyles"} 
+            className="LogInPanel" 
+            panelState={eventTarget} 
+            formSubmit={this.submitSignUp} 
+            updateField={this.updateField}
+          /> 
+        )}
 
         <div className="landingPageGreeting landingPageLeft">
           <div className="webstylesWrapper">          
@@ -89,9 +99,24 @@ class LandingPage extends Component {
             <h1 className="webstylesWord bothWords ">WEB STYLES</h1>
           </div>
           <div className='actionContainer'>
-             <p className='loginLink' onClick={(e)=>this.activateForm(e)}>Sign In</p>
-             <p className='signupLink' onClick={(e)=>this.activateForm(e)}>Sign Up</p>
-             <button className="getStartedButton" onClick={()=>this.goToMainPage()}>GET STARTED</button>
+              <p 
+                className='loginLink' 
+                onClick={(e)=>this.activateForm(e)}
+              >
+                Sign In
+              </p>
+              <p 
+                className='signupLink' 
+                onClick={(e)=>this.activateForm(e)}
+              >
+                Sign Up
+              </p>
+              <button 
+                className="getStartedButton" 
+                onClick={()=>this.goToMainPage()}
+              >
+                GET STARTED
+              </button>
           </div>
         </div>
       </div>

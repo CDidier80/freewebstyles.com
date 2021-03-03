@@ -11,15 +11,11 @@ class SignupPage extends Component {
   constructor(props){
     super(props)
     this.state = {
-        // props from App.js 
         toggleAuthenticated: props.toggleAuthenticated,
         verifyTokenValid: props.verifyTokenValid,
         authenticated: props.authenticated,
         currentUser: props.currentUser,
-        //
-
         loginPageDefault: props.loginPageDefault,
-
         eventTarget: "",
         username: "",
         email: "",
@@ -80,21 +76,23 @@ class SignupPage extends Component {
   }
 
   render() {
+
     const {loginPageDefault, currentUser, authenticated} = this.state
-    console.log("The state of SignupPage at render: ", this.state)
-    console.log("this.props of SignupPage at rendering: ", this.props)
-    console.log("Current User: ", currentUser)
-    console.log("Authenticated: ", authenticated)
-    console.log('/////////////////////////////////////////////////////////////////')
+    SignupPageRenderLogs(this.state, this.props, currentUser, authenticated)
+    const panelState = loginPageDefault === "signInLink" ? false : "signupLink"
+
     return (
       <div className="signupPage">
         <TriangleSvg />
-        {loginPageDefault === "signInLink" ? <LogInForm className="LogInPanel" formSubmit={this.submitLogIn} panelState={false} updateField={this.updateField}/> : null}
-        {loginPageDefault === "signUpLink" ? <LogInForm className="LogInPanel" formSubmit={this.submitSignUp} panelState={"signupLink"} updateField={this.updateField}/> : null}
+        <LogInForm 
+            className="LogInPanel" 
+            formSubmit={this.submitLogIn}          
+            updateField={this.updateField}
+            panelState={panelState}
+        />
       </div>
     )
   }
-
 }
 
 export default SignupPage

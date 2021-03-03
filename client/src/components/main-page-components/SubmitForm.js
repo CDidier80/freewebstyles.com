@@ -53,7 +53,7 @@ export default class SubmitForm extends Component {
             this.setState({license: event.target.value})
             break
           default:
-              console.log("updateField() switch statement originating in SubmitForm.js subcomponent had no matching cases.")
+            console.log("updateField() switch statement originating in SubmitForm.js subcomponent had no matching cases.")
         }
     }
     
@@ -122,8 +122,21 @@ export default class SubmitForm extends Component {
         // MUST PUT IN A HANDLE CHANGE FOR SELECT
         // select documentation: https://material-ui.com/components/selects/#select
         
-        const {styleName, tags, tagOptions, sourceLinks, toggleABoolean, dense, sourceCount, tagOneValue, tagTwoValue, tagThreeValue} = this.state
+        const {
+            styleName, 
+            tags, 
+            tagOptions, 
+            sourceLinks, 
+            toggleABoolean, 
+            dense, 
+            sourceCount, 
+            tagOneValue, 
+            tagTwoValue, 
+            tagThreeValue
+        } = this.state
+
         console.log("styleName value at render: ", styleName)
+        
         return (
             <div className="customBackdrop" id="backdrop" onClick={(e) => toggleABoolean(e, "isSubmitPanelVisible")}>
                 <form className={'form'} onClick={(e)=>e.stopPropagation()}>

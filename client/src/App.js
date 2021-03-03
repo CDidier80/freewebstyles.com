@@ -93,9 +93,45 @@ class App extends Component {
           </div>
         ) : (
           <Switch>
-            <Route exact path="/" component={(props) => <LandingPage {...props} verifyTokenValid={this.verifyTokenValid}  authenticated={authenticated} currentUser={currentUser} toggleAuthenticated={this.toggleAuthenticated}/>}/>
-            <Route exact path="/main" component={(props) => <MainPage {...props} goToSignupPage={this.goToSignupPage} authenticated={authenticated} verifyTokenValid={this.verifyTokenValid} authenticated={authenticated} currentUser={currentUser} toggleAuthenticated={this.toggleAuthenticated}/>}/>
-            <Route exact path="/login" component={(props) => <SignupPage {...props} loginPageDefault={loginPageDefault} authenticated={authenticated} verifyTokenValid={this.verifyTokenValid} authenticated={authenticated} currentUser={currentUser} toggleAuthenticated={this.toggleAuthenticated}/>}/>
+            <Route 
+              exact path="/" 
+              component={(props) => (
+                <LandingPage 
+                  {...props} verifyTokenValid={this.verifyTokenValid}  
+                  authenticated={authenticated} 
+                  currentUser={currentUser}                
+                  toggleAuthenticated={this.toggleAuthenticated}                                                        
+                /> 
+              )} 
+            />
+            <Route 
+              path="/main" 
+              component={(props) => (  
+                <MainPage    
+                  {...props} 
+                  goToSignupPage={this.goToSignupPage}      
+                  authenticated={authenticated} 
+                  verifyTokenValid={this.verifyTokenValid} 
+                  authenticated={authenticated} 
+                  currentUser={currentUser} 
+                  toggleAuthenticated={this.toggleAuthenticated}
+                /> 
+              )} 
+            />
+            <Route 
+              path="/login" 
+              component={(props) => ( 
+                <SignupPage  
+                  {...props} 
+                  loginPageDefault={loginPageDefault}       
+                  authenticated={authenticated} 
+                  verifyTokenValid={this.verifyTokenValid} 
+                  authenticated={authenticated} 
+                  currentUser={currentUser} 
+                  toggleAuthenticated={this.toggleAuthenticated}
+                /> 
+              )} 
+            />
 
             {/* <Route path="/register" component={(props) => ( <LandingPage> <Signup {...props} /> </LandingPage>)}/>
 
@@ -125,5 +161,4 @@ class App extends Component {
   }
 }
 
-// Router changed to withRouter(Router) in authentication lesson
 export default withRouter(App)
