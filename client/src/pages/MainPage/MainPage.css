@@ -1,0 +1,109 @@
+.mainPage {
+    margin: 0 0;
+    padding: 0 0;
+    /* height: 100%;
+    width: 100%; */
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+#trianglify-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* width: 1920px;
+    height: 1080px; */
+    min-height: 100vh;
+    min-width: 100vw;
+    max-height: 100vh;
+    overflow: hidden;
+    z-index: -1
+}
+
+
+.display {
+    width: 1000px;
+    margin: 0 auto;
+    padding-top: 50px;
+    z-index: 100;
+}
+
+.iframeWindow {
+    width: 100%;
+    height: 300px;
+    z-index: 100;
+    border: 1px solid black;
+}
+
+.iframeButtonPanel {
+    display: flex;
+    border: 1px blue solid;
+    border-bottom: none;
+    background-color: slateblue;
+    padding: 1px;
+}
+
+    .toggleCodeButton {
+        margin-left: auto;
+    }
+
+.editorWrapper {
+    width: 100%;
+    max-height: 310px;
+    display: flex;
+    overflow: auto;
+    justify-content: center;
+    border: 1px solid rgb(105, 245, 77);
+}
+
+    .languageHeader{
+        color: rgb(105, 245, 77);
+        background-color: rgba(46, 46, 46, 0.885);
+        border-top: 1px black solid;
+        display: inline-block;
+        font-size: 15px;
+        font-style: italic;
+        width: 50%;
+        margin: 0;
+        margin-bottom: 1px;
+        padding: 0;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+
+
+.styleGrid {
+    background-color: rgba(46, 42, 42, 0.693);
+    padding: 3px 6px 3px 6px;
+}
+.recentlyAdded {
+    color: white;
+    text-align: left;
+    margin-top: 40px;
+    padding-bottom: 4px;
+    font-size: 20px;
+    font-family: "Poiret One";
+    width: 100%;
+    border-bottom: 1px white solid;
+}
+
+
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 2%}
+    50%{background-position:100% 99%}
+    100%{background-position:0% 2%}
+  }
+  @-moz-keyframes AnimationName {
+    0%{background-position:0% 2%}
+    50%{background-position:100% 99%}
+    100%{background-position:0% 2%}
+  }
+  @keyframes AnimationName {
+    0%{background-position:0% 2%}
+    50%{background-position:100% 99%}
+    100%{background-position:0% 2%}
+  }

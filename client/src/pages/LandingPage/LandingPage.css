@@ -1,0 +1,160 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Poiret+One&display=swap'); */
+
+/* If font's are broken uncomment them. I'm trying to add them to app.css to make them universal imports */
+
+.landingPage {
+  position: relative;
+  top: 0;
+  margin: 0 0;
+  padding: 0 0;
+  min-height: 100vh;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+/*   
+  background: linear-gradient(315deg, #c4a4c4, #ffffff, #929292, rgba(207, 252, 242, 1), 
+   #929292, #ffffff,rgb(255, 235, 191), #929292, #ffffff, 
+   rgb(206, 178, 220), #ffffff, #929292, rgb(152, 255, 173),
+  #929292, #ffffff, rgb(220, 178, 178), #ffffff, #929292);
+  background-size: 4200% 4200%; */
+/* 
+  /* -webkit-animation: AnimationName 50s ease infinite;
+  -moz-animation: AnimationName 50s ease infinite;
+  animation: AnimationName 50s ease infinite; */ 
+
+  font-family: Roboto;
+  font-size: 20px;
+}
+
+#trianglify-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow: hidden;
+  /* transform: skew(60deg, -20deg) scaleX(1.4); */
+}
+
+
+.landingPageGreeting {
+  position: relative;
+  top: 18vh;
+  width: 50vw;
+  min-width: 530px;
+  margin: auto;
+  margin-top: 0px;
+  font-family: 'Poiret One';
+}
+
+.landingPageLeft {
+  right: 15vw;
+}
+
+  .webstylesWrapper {
+    text-align: center;
+    
+  }
+
+    .bothWords {
+      border-radius: 20px;
+      display: block;
+      font-size: 50px;
+      /* font-family: 'Rock Salt' */
+
+    }
+
+
+
+    .freeWord {
+      font-size: 140px;
+      padding: 0;
+      padding-top: 5px;
+      margin: 0;
+      min-width: 392px;
+      position: relative;
+  }
+
+
+
+  .webstylesWord {
+    
+    font-style: size;
+    margin: 0 auto;
+    margin-top: 15px;
+    padding-bottom: 10px;
+    min-width: 536px;
+    /* background-color: green; */
+    font-size: 90px;
+
+
+  }
+
+
+    .loginLink, .signupLink {
+      padding: 25px;
+      padding-bottom: 1px;
+      font-size: 30px;
+      display: inline-block;
+      cursor: pointer;
+      color: white;
+      font-family: Roboto;
+      font-weight: bolder;
+      /* text-shadow:  */
+    /* -1px 0px 0px rgba(0,0,0,1); */
+
+    }
+
+
+
+  .getStartedButton {
+    display: block;
+    margin: 0 auto;
+    /* background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%); */
+    background: linear-gradient(45deg, #2196F3 30%, #21CBF3 90%);
+    border-radius: 3px;
+    border: 0;
+    color: white;
+    height: 58px;
+    padding: 0 30px;
+    /* box-shadow: 0 3px 5px 2px rgba(255, 105, 135, .3); */
+    box-shadow: 0 3px 5px 2px rgba(33, 203, 243, .3);
+    font-size: 19px;
+    font-weight: 90;
+  }
+
+
+  .LogInPanel {
+    /* position: relative;
+    right: 0; */
+  }
+
+@-webkit-keyframes AnimationName {
+  0%{background-position:0% 2%}
+  50%{background-position:100% 99%}
+  100%{background-position:0% 2%}
+}
+@-moz-keyframes AnimationName {
+  0%{background-position:0% 2%}
+  50%{background-position:100% 99%}
+  100%{background-position:0% 2%}
+}
+@keyframes AnimationName {
+  0%{background-position:0% 2%}
+  50%{background-position:100% 99%}
+  100%{background-position:0% 2%}
+}
+
+@keyframes animateReverse {
+  0% {
+    background-position: 200% 150%;
+  }
+  100% {
+    background-position: -200% -150%;
+  }
+} 
