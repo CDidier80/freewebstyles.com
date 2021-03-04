@@ -52,9 +52,6 @@
   font-family: 'Poiret One';
 }
 
-.landingPageLeft {
-  right: 15vw;
-}
 
   .webstylesWrapper {
     text-align: center;
@@ -92,7 +89,6 @@
     /* background-color: green; */
     font-size: 90px;
 
-
   }
 
 
@@ -112,20 +108,16 @@
 
 
 
-  .getStartedButton {
-    display: block;
-    margin: 0 auto;
-    /* background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%); */
-    background: linear-gradient(45deg, #2196F3 30%, #21CBF3 90%);
-    border-radius: 3px;
-    border: 0;
-    color: white;
-    height: 58px;
-    padding: 0 30px;
-    /* box-shadow: 0 3px 5px 2px rgba(255, 105, 135, .3); */
-    box-shadow: 0 3px 5px 2px rgba(33, 203, 243, .3);
-    font-size: 19px;
-    font-weight: 90;
+  .get-stylish-button {
+    width: 0;
+    height: 0;
+    border: 0 solid transparent;
+    border-bottom-width: 61px;
+    border-top-width: 61px;
+    background-color: transparent;
+    border-left: 146px solid rgb(226, 117, 15);
+
+
   }
 
 
