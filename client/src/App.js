@@ -4,17 +4,17 @@ import MainPageRoute from './Routes/MainPageRoute'
 import React from 'react'
 import "./styles/App.css"
 
-const App = () =>  {
+const App = (props) =>  {
 
     return (
         <main className="App">
             <Switch>
-                <LandingPageRoute />
-                <MainPageRoute   />
+                <LandingPageRoute {...props} />
+                <MainPageRoute   {...props} />
             </Switch>
         </main>
     )
 }
 
 
-export default withRouter(App)
+export default withRouter(App) 
