@@ -81,7 +81,7 @@ textarea:focus::placeholder {
   color: rgba(0, 0, 0, 0.2);
 }
 
-button {
+/* button {
   background-color: #ff7043;
   padding: .4em 2em;
   border-radius: .5em;
@@ -95,7 +95,7 @@ button {
 button:hover {
   background-color: #ffa270;
   color: #333;
-}
+} */
 
 li {
   list-style: none;
