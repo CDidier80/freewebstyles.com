@@ -1,1 +1,6 @@
 .env
+package-lock.json
+./gitignore
+node_modules
+.gitignore
+client/.gitignore
